@@ -10,3 +10,7 @@ path = "data/tradiba.db"
 [dashboard]
 host = "127.0.0.1"
 port = 8501
+
+[strategies.example_bos]
+enabled = false
+risk = 0.01

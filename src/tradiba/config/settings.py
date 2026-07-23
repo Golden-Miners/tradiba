@@ -31,3 +31,4 @@ class Settings:
     mt5: MT5Settings
     database: DatabaseSettings
     dashboard: DashboardSettings
+    strategies: dict[str, dict] = __import__("dataclasses").field(default_factory=dict)

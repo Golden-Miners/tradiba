@@ -4,6 +4,7 @@ Production scheduler.
 
 from __future__ import annotations
 
+from threading import Thread
 from time import monotonic
 from time import sleep
 
@@ -22,6 +23,7 @@ class Scheduler:
     def __init__(self) -> None:
         self._tasks: list[Task] = []
         self._running = False
+        self._thread: Thread | None = None
 
     def add_task(self, task: Task) -> None:
         self._tasks.append(task)
@@ -31,6 +33,18 @@ class Scheduler:
 
     def stop(self) -> None:
         self._running = False
+        if self._thread is not None:
+            self._thread.join(timeout=2.0)
+            self._thread = None
+
+    def start(self) -> None:
+        """Start the scheduler loop on a background daemon thread."""
+        self._thread = Thread(target=self.run, daemon=True)
+        self._thread.start()
+
+    @property
+    def is_running(self) -> bool:
+        return self._running
 
     def run(self) -> None:
         self._running = True

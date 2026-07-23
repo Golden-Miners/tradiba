@@ -11,7 +11,10 @@ logger = get_logger(__name__)
 
 
 def main() -> None:
-    app = Application()
+    from tradiba.mt5.service import MT5Service
+    mt5 = MT5Service()
+    app = Application(market_provider=mt5)
+    app.lifecycle.add(mt5)
 
     logger.info("Tradiba starting...")
     logger.info("Configuration loaded.")
