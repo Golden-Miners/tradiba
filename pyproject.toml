@@ -1,0 +1,17 @@
+[project]
+name = "tradiba"
+version = "0.1.0"
+description = "Offline-first AI trading research platform"
+requires-python = ">=3.12"
+authors = [{name = "Golden-Miners"}]
+dependencies = []
+
+[build-system]
+requires=["hatchling>=1.27.0"]
+build-backend="hatchling.build"
+
+[tool.ruff]
+line-length=100
+
+[tool.pytest.ini_options]
+testpaths=["tests"]
