@@ -2,16 +2,21 @@
 name = "tradiba"
 version = "0.1.0"
 description = "Offline-first AI trading research platform"
-requires-python = ">=3.12"
-authors = [{name = "Golden-Miners"}]
+requires-python = ">=3.11"
+authors = [
+    { name = "Golden-Miners" }
+]
 dependencies = []
 
 [build-system]
-requires=["hatchling>=1.27.0"]
-build-backend="hatchling.build"
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tradiba"]
 
 [tool.ruff]
-line-length=100
+line-length = 100
 
 [tool.pytest.ini_options]
-testpaths=["tests"]
+testpaths = ["tests"]

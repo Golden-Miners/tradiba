@@ -1,0 +1,12 @@
+[mt5]
+terminal_path = ""
+login = 0
+password = ""
+server = ""
+
+[database]
+path = "data/tradiba.db"
+
+[dashboard]
+host = "127.0.0.1"
+port = 8501
