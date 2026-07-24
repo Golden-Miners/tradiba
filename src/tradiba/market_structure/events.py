@@ -32,3 +32,15 @@ class BearishBOSEvent(Event):
 class TrendChangedEvent(Event):
     previous: Trend
     current: Trend
+
+
+@dataclass(slots=True, frozen=True)
+class BullishCHOCHEvent(Event):
+    candle: Candle
+    broken_price: float
+
+
+@dataclass(slots=True, frozen=True)
+class BearishCHOCHEvent(Event):
+    candle: Candle
+    broken_price: float

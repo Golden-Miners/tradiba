@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from tradiba.market.models import Candle, Timeframe
 from tradiba.market_structure.models import SwingPoint, SwingType, Trend
 from tradiba.market_structure.bos import BOSDetector
+from tradiba.market_structure.state import MarketStructureState
 from tradiba.market_structure.events import BullishBOSEvent, BearishBOSEvent, TrendChangedEvent
 
 def candle(price: float, t: int = 1) -> Candle:
@@ -29,9 +30,10 @@ def swing(price: float, t: SwingType) -> SwingPoint:
 
 def test_bullish_bos():
     detector = BOSDetector()
-    detector.update_high(swing(1.1050, SwingType.HIGH))
+    state = MarketStructureState()
+    state.last_swing_high = swing(1.1050, SwingType.HIGH)
     
-    events = detector.update_candle(candle(1.1060))
+    events = detector.update_candle(candle(1.1060), state)
     
     assert len(events) == 2
     assert isinstance(events[0], BullishBOSEvent)
@@ -41,9 +43,10 @@ def test_bullish_bos():
 
 def test_bearish_bos():
     detector = BOSDetector()
-    detector.update_low(swing(1.0940, SwingType.LOW))
+    state = MarketStructureState()
+    state.last_swing_low = swing(1.0940, SwingType.LOW)
     
-    events = detector.update_candle(candle(1.0935))
+    events = detector.update_candle(candle(1.0935), state)
     
     assert len(events) == 2
     assert isinstance(events[0], BearishBOSEvent)
@@ -53,17 +56,19 @@ def test_bearish_bos():
 
 def test_no_break():
     detector = BOSDetector()
-    detector.update_high(swing(1.1050, SwingType.HIGH))
-    detector.update_low(swing(1.0940, SwingType.LOW))
+    state = MarketStructureState()
+    state.last_swing_high = swing(1.1050, SwingType.HIGH)
+    state.last_swing_low = swing(1.0940, SwingType.LOW)
     
-    events = detector.update_candle(candle(1.1048))
+    events = detector.update_candle(candle(1.1048), state)
     assert len(events) == 0
 
 def test_trend_change():
     detector = BOSDetector()
-    detector.update_high(swing(1.1050, SwingType.HIGH))
+    state = MarketStructureState()
+    state.last_swing_high = swing(1.1050, SwingType.HIGH)
     
-    events = detector.update_candle(candle(1.1060))
+    events = detector.update_candle(candle(1.1060), state)
     
     trend_events = [e for e in events if isinstance(e, TrendChangedEvent)]
     assert len(trend_events) == 1
@@ -72,10 +77,15 @@ def test_trend_change():
 
 def test_repeated_closes_above_swing_do_not_duplicate():
     detector = BOSDetector()
-    detector.update_high(swing(1.1050, SwingType.HIGH))
+    state = MarketStructureState()
+    state.last_swing_high = swing(1.1050, SwingType.HIGH)
     
-    events1 = detector.update_candle(candle(1.1060))
+    events1 = detector.update_candle(candle(1.1060), state)
     assert len(events1) > 0
     
-    events2 = detector.update_candle(candle(1.1070))
+    # Simulate service state update
+    state.last_broken_high = state.last_swing_high.price
+    state.trend = Trend.BULLISH
+    
+    events2 = detector.update_candle(candle(1.1070), state)
     assert len(events2) == 0

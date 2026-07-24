@@ -12,4 +12,6 @@ class MarketStructureState:
     last_broken_high: float | None = None
     last_broken_low: float | None = None
 
+    choch_detected: bool = False
+
     trend: Trend = Trend.UNKNOWN

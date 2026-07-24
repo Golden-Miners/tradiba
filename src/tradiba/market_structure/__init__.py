@@ -1,13 +1,11 @@
-"""
-Tradiba market structure analysis.
-"""
-
 from .events import (
     SwingHighEvent,
     SwingLowEvent,
     BullishBOSEvent,
     BearishBOSEvent,
     TrendChangedEvent,
+    BullishCHOCHEvent,
+    BearishCHOCHEvent,
 )
 from .models import (
     SwingPoint,
@@ -17,6 +15,7 @@ from .models import (
 from .service import MarketStructureService
 from .detector import SwingDetector
 from .bos import BOSDetector
+from .choch import CHOCHDetector
 
 __all__ = (
     # Models
@@ -27,10 +26,13 @@ __all__ = (
     "MarketStructureService",
     "SwingDetector",
     "BOSDetector",
+    "CHOCHDetector",
     # Events
     "SwingHighEvent",
     "SwingLowEvent",
     "BullishBOSEvent",
     "BearishBOSEvent",
     "TrendChangedEvent",
+    "BullishCHOCHEvent",
+    "BearishCHOCHEvent",
 )
