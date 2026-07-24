@@ -8,7 +8,7 @@ from tradiba.execution.models.result import TradeResult
 class ExecutionProvider(ABC):
 
     @abstractmethod
-    def buy(
+    def buy_market(
         self,
         *,
         symbol: str,
@@ -19,7 +19,7 @@ class ExecutionProvider(ABC):
         ...
 
     @abstractmethod
-    def sell(
+    def sell_market(
         self,
         *,
         symbol: str,
@@ -27,6 +27,18 @@ class ExecutionProvider(ABC):
         sl: float,
         tp: float,
     ) -> TradeResult:
+        ...
+
+    @abstractmethod
+    def close_position(self, ticket: int) -> TradeResult:
+        ...
+
+    @abstractmethod
+    def modify_position(self, ticket: int, sl: float, tp: float) -> TradeResult:
+        ...
+
+    @abstractmethod
+    def orders(self):
         ...
 
     @abstractmethod

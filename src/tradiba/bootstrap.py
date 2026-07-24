@@ -11,6 +11,7 @@ from tradiba.strategy.manager import StrategyManager
 from tradiba.portfolio.service import PortfolioService
 from tradiba.risk.service import RiskService
 from tradiba.execution.service import ExecutionService
+from tradiba.execution.synchronizer import ExecutionSynchronizer
 from tradiba.risk.rules.max_position_size import MaximumPositionSizeRule
 from tradiba.risk.rules.max_open_trades import MaximumOpenTradesRule
 from tradiba.risk.rules.max_symbol_exposure import MaximumSymbolExposureRule
@@ -40,6 +41,7 @@ def bootstrap() -> Application:
     container.register_singleton(CommandDispatcher, dispatcher)
 
     # Core Services
+    execution_sync = ExecutionSynchronizer(event_bus, mt5_adapter, scheduler)
     portfolio_service = PortfolioService(
         event_bus=event_bus,
         provider=mt5_adapter,
@@ -78,6 +80,7 @@ def bootstrap() -> Application:
     container.register_singleton(StrategyManager, strategy_manager)
 
     # Attach to Lifecycle
+    app.lifecycle.add(execution_sync)
     app.lifecycle.add(portfolio_service)
     app.lifecycle.add(execution_service)
     app.lifecycle.add(risk_service)

@@ -45,5 +45,5 @@ class Strategy(ABC):
     def publish_signal(self, signal: Signal) -> None:
         """Publish a generated signal to the event bus."""
         from tradiba.logging import get_logger
-        get_logger(__name__).info("Strategy generated %s signal for %s", signal.action.value, signal.symbol)
+        get_logger(__name__).info("Strategy generated %s signal for %s", signal.direction.value, signal.symbol)
         self._event_bus.publish(SignalGeneratedEvent(signal=signal))

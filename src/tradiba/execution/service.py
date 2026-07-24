@@ -71,14 +71,14 @@ class ExecutionService(Service):
         
         try:
             if order.side == OrderSide.BUY:
-                result = self._provider.buy(
+                result = self._provider.buy_market(
                     symbol=order.symbol,
                     volume=order.volume,
                     sl=order.stop_loss,
                     tp=order.take_profit,
                 )
             else:
-                result = self._provider.sell(
+                result = self._provider.sell_market(
                     symbol=order.symbol,
                     volume=order.volume,
                     sl=order.stop_loss,

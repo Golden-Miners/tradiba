@@ -13,7 +13,7 @@ logger = get_logger(__name__)
 
 class MT5ExecutionAdapter(ExecutionProvider):
 
-    def buy(
+    def buy_market(
         self,
         *,
         symbol: str,
@@ -46,7 +46,7 @@ class MT5ExecutionAdapter(ExecutionProvider):
             
         return TradeResult(success=True, ticket=result.order, message="Order executed successfully")
 
-    def sell(
+    def sell_market(
         self,
         *,
         symbol: str,
@@ -78,6 +78,72 @@ class MT5ExecutionAdapter(ExecutionProvider):
             )
             
         return TradeResult(success=True, ticket=result.order, message="Order executed successfully")
+
+    def close_position(self, ticket: int) -> TradeResult:
+        position = mt5.positions_get(ticket=ticket)
+        if not position:
+            return TradeResult(success=False, ticket=None, message=f"Position {ticket} not found")
+        position = position[0]
+        
+        tick = mt5.symbol_info_tick(position.symbol)
+        if not tick:
+            return TradeResult(success=False, ticket=None, message=f"Symbol {position.symbol} not found")
+            
+        type_dict = {
+            mt5.ORDER_TYPE_BUY: mt5.ORDER_TYPE_SELL,
+            mt5.ORDER_TYPE_SELL: mt5.ORDER_TYPE_BUY
+        }
+        price_dict = {
+            mt5.ORDER_TYPE_BUY: tick.bid,
+            mt5.ORDER_TYPE_SELL: tick.ask
+        }
+        
+        request = {
+            "action": mt5.TRADE_ACTION_DEAL,
+            "position": ticket,
+            "symbol": position.symbol,
+            "volume": position.volume,
+            "type": type_dict[position.type],
+            "price": price_dict[position.type],
+            "deviation": 20,
+            "magic": 0,
+            "comment": "python script close",
+            "type_time": mt5.ORDER_TIME_GTC,
+            "type_filling": mt5.ORDER_FILLING_IOC,
+        }
+        
+        result = mt5.order_send(request)
+        if result is None:
+            return TradeResult(success=False, ticket=None, message="order_send returned None")
+            
+        if result.retcode != mt5.TRADE_RETCODE_DONE:
+            return TradeResult(success=False, ticket=None, message=f"Close failed: {result.comment}")
+            
+        return TradeResult(success=True, ticket=result.order, message="Position closed")
+
+    def modify_position(self, ticket: int, sl: float, tp: float) -> TradeResult:
+        position = mt5.positions_get(ticket=ticket)
+        if not position:
+            return TradeResult(success=False, ticket=None, message=f"Position {ticket} not found")
+        position = position[0]
+        
+        request = {
+            "action": mt5.TRADE_ACTION_SLTP,
+            "position": ticket,
+            "symbol": position.symbol,
+            "sl": sl,
+            "tp": tp,
+            "magic": 0
+        }
+        
+        result = mt5.order_send(request)
+        if result is None:
+            return TradeResult(success=False, ticket=None, message="order_send returned None")
+            
+        if result.retcode != mt5.TRADE_RETCODE_DONE:
+            return TradeResult(success=False, ticket=None, message=f"Modify failed: {result.comment}")
+            
+        return TradeResult(success=True, ticket=ticket, message="Position modified")
 
     def account_info(self):
         from tradiba.portfolio.models import Portfolio
@@ -111,3 +177,10 @@ class MT5ExecutionAdapter(ExecutionProvider):
             )
             for p in positions
         ]
+
+    def orders(self):
+        orders = mt5.orders_get()
+        if not orders:
+            return []
+        
+        return list(orders)

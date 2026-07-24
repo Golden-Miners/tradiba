@@ -11,10 +11,15 @@ from tradiba.events import EventBus
 from tradiba.logging import get_logger
 
 from .base import Strategy
+from .bos import BOSStrategy
 from .registry import STRATEGY_REGISTRY
 
 logger = get_logger(__name__)
 
+# Basic registry for demonstration
+_REGISTRY = {
+    "bos_strategy": BOSStrategy
+}
 
 class StrategyManager(Service):
     """
