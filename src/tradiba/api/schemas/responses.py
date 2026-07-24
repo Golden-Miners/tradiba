@@ -10,3 +10,4 @@ class PortfolioResponse(BaseModel):
 class HealthResponse(BaseModel):
     status: str
     version: str
+    services: dict[str, str]

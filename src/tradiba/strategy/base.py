@@ -13,12 +13,15 @@ from .events import SignalGeneratedEvent
 from .models import Signal
 
 
+from tradiba.strategy.narrative import MarketNarrative
+
+
 class Strategy(ABC):
     """
     Base class for all trading strategies.
     
-    Strategies are responsible for analyzing market events and generating
-    trading signals. They do not execute trades or manage risk directly.
+    Strategies evaluate a MarketNarrative and generate trading signals.
+    They do not execute trades or manage risk directly.
     """
 
     def __init__(self, name: str, event_bus: EventBus, config: dict[str, Any]) -> None:
@@ -27,18 +30,10 @@ class Strategy(ABC):
         self.config = config
 
     @abstractmethod
-    def start(self) -> None:
+    def evaluate(self, narrative: MarketNarrative) -> list[Signal]:
         """
-        Initialize the strategy.
-        This is where the strategy should subscribe to required events on the event bus.
-        """
-        pass
-
-    @abstractmethod
-    def stop(self) -> None:
-        """
-        Teardown the strategy.
-        This is where the strategy should unsubscribe from events and clean up state.
+        Evaluate the current market narrative and return a list of signals.
+        If no signals are generated, return an empty list.
         """
         pass
 

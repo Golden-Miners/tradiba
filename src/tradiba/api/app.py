@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request
 from tradiba.config.loader import load_settings
 from tradiba.persistence.database import Database
 from tradiba.api.schemas.responses import HealthResponse, PortfolioResponse
@@ -19,8 +19,35 @@ def get_db():
         session.close()
 
 @app.get("/health", response_model=HealthResponse)
-def health_check():
-    return HealthResponse(status="ok", version="0.1.0")
+def health_check(request: Request):
+    container = getattr(request.app.state, "container", None)
+    services_status = {}
+    
+    if container:
+        from tradiba.events import EventBus
+        from tradiba.scheduler import Scheduler
+        from tradiba.persistence.database import Database
+        from tradiba.mt5.connection import MT5ConnectionManager
+        
+        # Check basic resolution (if it resolves, we count it as "registered")
+        # For MT5, we can check if it's connected
+        mt5 = container.resolve(MT5ConnectionManager)
+        services_status["mt5"] = "connected" if (mt5 and mt5._connected) else "disconnected"
+        
+        db = container.resolve(Database)
+        services_status["database"] = "registered" if db else "missing"
+        
+        bus = container.resolve(EventBus)
+        services_status["event_bus"] = "registered" if bus else "missing"
+        
+        scheduler = container.resolve(Scheduler)
+        services_status["scheduler"] = "registered" if scheduler else "missing"
+    
+    return HealthResponse(
+        status="ok", 
+        version="0.1.0",
+        services=services_status
+    )
 
 @app.get("/portfolio")
 def get_portfolio(db=Depends(get_db)):

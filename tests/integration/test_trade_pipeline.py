@@ -5,8 +5,7 @@ from datetime import datetime, timezone
 from tradiba.events import EventBus
 from tradiba.scheduler import Scheduler
 from tradiba.market_structure.service import MarketStructureService
-from tradiba.market_structure.state import MarketStructureState
-from tradiba.market_structure.models import Trend, SwingHigh
+from tradiba.market_structure.models import Trend, SwingPoint, SwingKind
 from tradiba.market.events import CandleClosedEvent
 from tradiba.mt5.models import Candle
 
@@ -56,11 +55,26 @@ def test_vertical_slice_bos_to_trade(mock_execution_provider, test_db):
     structure_service.start()
     
     # Inject a prepared state to guarantee a BOS on the next candle
-    state = MarketStructureState("EURUSD", "H1")
-    state.trend = Trend.BULLISH
-    candle = Candle("EURUSD", "H1", datetime(2024, 1, 1, tzinfo=timezone.utc), 1.1500, 1.1500, 1.1500, 1.1500, 1, 0, 0)
-    state.last_swing_high = SwingHigh(candle=candle, price=1.1500)
-    structure_service._states[("EURUSD", "H1")] = state
+    # Use the engine's internal state structure
+    engine = structure_service._engine
+    if "EURUSD" not in engine.state:
+        from tradiba.market_structure.state import MarketStructureState
+        engine.state["EURUSD"] = MarketStructureState("EURUSD")
+    
+    tf_state = engine.state["EURUSD"].get_timeframe_state("H1")
+    tf_state.trend = Trend.BULLISH
+    
+    swing_candle = Candle(
+        "EURUSD", "H1", datetime(2024, 1, 1, tzinfo=timezone.utc),
+        1.1500, 1.1500, 1.1500, 1.1500, 1, 0, 0,
+    )
+    tf_state.last_swing_high = SwingPoint(
+        index=0,
+        timestamp=swing_candle.timestamp,
+        price=1.1500,
+        kind=SwingKind.HIGH,
+        candle=swing_candle,
+    )
 
     # 2. Strategy Manager
     strategy_configs = {
@@ -102,7 +116,6 @@ def test_vertical_slice_bos_to_trade(mock_execution_provider, test_db):
     
     call_kwargs = mock_execution_provider.buy_market.call_args.kwargs
     assert call_kwargs["symbol"] == "EURUSD"
-    # assert call_kwargs["sl"] < 1.1510 # Wait, the BOS entry is exactly 1.1500, so SL is 1.1480
 
     # 6. Database Persistence
     # Simulate closing the position via ExecutionSynchronizer behavior

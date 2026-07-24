@@ -1,23 +1,25 @@
 """
-Tradiba market data subsystem.
+Market data package.
 """
 
 from .aggregator import BarAggregator
 from .events import (
     CandleClosedEvent,
+    CandleUpdatedEvent,
     SymbolConnectedEvent,
     SymbolDisconnectedEvent,
-    TickReceivedEvent,
+    TickEvent,
 )
 from .service import MarketDataService
 from .subscriptions import Subscription
 
-__all__ = (
+__all__ = [
     "BarAggregator",
     "CandleClosedEvent",
+    "CandleUpdatedEvent",
     "MarketDataService",
+    "Subscription",
     "SymbolConnectedEvent",
     "SymbolDisconnectedEvent",
-    "Subscription",
-    "TickReceivedEvent",
-)
+    "TickEvent",
+]

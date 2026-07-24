@@ -5,8 +5,7 @@ from abc import ABC, abstractmethod
 import typing
 
 if typing.TYPE_CHECKING:
-    from tradiba.mt5.models import Candle, Tick
-    from tradiba.mt5.timeframes import Timeframe
+    from tradiba.market.models import Candle, Tick, Timeframe
 
 
 class MarketDataProvider(ABC):

@@ -79,6 +79,48 @@ class MT5ExecutionAdapter(ExecutionProvider):
             
         return TradeResult(success=True, ticket=result.order, message="Order executed successfully")
 
+    def place_pending_order(
+        self,
+        *,
+        symbol: str,
+        order_type: str,
+        volume: float,
+        price: float,
+        sl: float,
+        tp: float,
+    ) -> TradeResult:
+        order_builders = {
+            "BUY_LIMIT": RequestBuilder.buy_limit,
+            "SELL_LIMIT": RequestBuilder.sell_limit,
+            "BUY_STOP": RequestBuilder.buy_stop,
+            "SELL_STOP": RequestBuilder.sell_stop,
+        }
+        
+        builder = order_builders.get(order_type)
+        if not builder:
+            return TradeResult(success=False, ticket=None, message=f"Unsupported pending order type: {order_type}")
+            
+        request = builder(
+            symbol=symbol,
+            volume=volume,
+            price=price,
+            sl=sl,
+            tp=tp,
+        )
+        
+        result = mt5.order_send(request)
+        if result is None:
+            return TradeResult(success=False, ticket=None, message="order_send returned None")
+            
+        if result.retcode != mt5.TRADE_RETCODE_DONE:
+            return TradeResult(
+                success=False, 
+                ticket=None, 
+                message=f"Pending order failed. Retcode: {result.retcode}. Comment: {result.comment}"
+            )
+            
+        return TradeResult(success=True, ticket=result.order, message="Pending order placed successfully")
+
     def close_position(self, ticket: int) -> TradeResult:
         position = mt5.positions_get(ticket=ticket)
         if not position:
@@ -144,6 +186,21 @@ class MT5ExecutionAdapter(ExecutionProvider):
             return TradeResult(success=False, ticket=None, message=f"Modify failed: {result.comment}")
             
         return TradeResult(success=True, ticket=ticket, message="Position modified")
+
+    def cancel_order(self, ticket: int) -> TradeResult:
+        request = {
+            "action": mt5.TRADE_ACTION_REMOVE,
+            "order": ticket,
+        }
+        
+        result = mt5.order_send(request)
+        if result is None:
+            return TradeResult(success=False, ticket=None, message="order_send returned None")
+            
+        if result.retcode != mt5.TRADE_RETCODE_DONE:
+            return TradeResult(success=False, ticket=None, message=f"Cancel failed: {result.comment}")
+            
+        return TradeResult(success=True, ticket=ticket, message="Order canceled")
 
     def account_info(self):
         from tradiba.portfolio.models import Portfolio

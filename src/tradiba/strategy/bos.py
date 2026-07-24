@@ -5,7 +5,6 @@ from typing import Any
 from tradiba.logging import get_logger
 from tradiba.strategy.base import Strategy
 from tradiba.strategy.models import Direction, Signal
-from tradiba.market_structure.events import BreakOfStructureEvent
 from tradiba.events import EventBus
 from tradiba.strategy.registry import register_strategy
 
@@ -23,37 +22,40 @@ class BOSStrategy(Strategy):
         super().__init__(name, event_bus, config)
         self.symbol = config.get("symbol", "EURUSD")
         self.timeframe = config.get("timeframe", "H1")
+        self.last_trend = None
         logger.info("BOSStrategy '%s' initialized for %s %s", name, self.symbol, self.timeframe)
 
-    def start(self) -> None:
-        self._event_bus.subscribe(BreakOfStructureEvent, self._on_bos)
-
-    def stop(self) -> None:
-        self._event_bus.unsubscribe(BreakOfStructureEvent, self._on_bos)
-
-    def _on_bos(self, event: BreakOfStructureEvent) -> None:
-        bos = event.bos
-        if bos.candle.symbol != self.symbol or bos.candle.timeframe != self.timeframe:
-            return
-
-        direction = Direction.LONG if bos.direction.name == "BULLISH" else Direction.SHORT
+    def evaluate(self, narrative) -> list[Signal]:
+        signals = []
         
-        entry_price = bos.broken_level
-        
-        if direction == Direction.LONG:
-            sl = entry_price - 0.0020
-            tp = entry_price + 0.0020
-        else:
-            sl = entry_price + 0.0020
-            tp = entry_price - 0.0020
+        # Detect trend change (which implies a BOS or CHOCH occurred)
+        if self.last_trend is not None and narrative.trend != self.last_trend:
+            direction = Direction.LONG if narrative.trend.name == "BULLISH" else Direction.SHORT
+            
+            # Simple entry based on current price (assuming narrative has timestamp, but we don't have current price in narrative)
+            # Wait, the MarketNarrative doesn't have current price? We can use an active OB's zone_low/high.
+            # Or we can just use the latest OB.
+            if narrative.active_obs:
+                latest_ob = narrative.active_obs[-1]
+                entry_price = latest_ob.zone_low if direction == Direction.LONG else latest_ob.zone_high
+                
+                if direction == Direction.LONG:
+                    sl = entry_price - 0.0020
+                    tp = entry_price + 0.0020
+                else:
+                    sl = entry_price + 0.0020
+                    tp = entry_price - 0.0020
 
-        signal = Signal(
-            strategy_id=self.name,
-            symbol=self.symbol,
-            direction=direction,
-            entry=entry_price,
-            stop_loss=sl,
-            take_profit=tp,
-            confidence=1.0,
-        )
-        self.publish_signal(signal)
+                signal = Signal(
+                    strategy_id=self.name,
+                    symbol=self.symbol,
+                    direction=direction,
+                    entry=entry_price,
+                    stop_loss=sl,
+                    take_profit=tp,
+                    confidence=1.0,
+                )
+                signals.append(signal)
+
+        self.last_trend = narrative.trend
+        return signals
