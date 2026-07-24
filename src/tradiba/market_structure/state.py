@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from .models import SwingPoint, Trend, LiquidityPool, OrderBlock
+from .models import SwingPoint, Trend, LiquidityPool, OrderBlock, FairValueGap
 
 
 @dataclass(slots=True)
@@ -16,5 +16,7 @@ class MarketStructureState:
     trend: Trend = Trend.UNKNOWN
 
     active_liquidity: list[LiquidityPool] = field(default_factory=list)
+
+    active_fvgs: list[FairValueGap] = field(default_factory=list)
 
     active_order_blocks: list[OrderBlock] = field(default_factory=list)

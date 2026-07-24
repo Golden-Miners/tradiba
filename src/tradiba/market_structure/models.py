@@ -69,6 +69,24 @@ class OrderBlockStatus(Enum):
     INVALIDATED = "INVALIDATED"
 
 
+class FVGStatus(Enum):
+    ACTIVE = "ACTIVE"
+    FILLED = "FILLED"
+    ARCHIVED = "ARCHIVED"
+
+
+@dataclass(slots=True)
+class FairValueGap:
+    id: str
+    symbol: str
+    timeframe: str
+    direction: Trend
+    high: float
+    low: float
+    created_at: datetime
+    status: FVGStatus = FVGStatus.ACTIVE
+
+
 @dataclass(slots=True)
 class OrderBlock:
     id: str

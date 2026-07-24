@@ -4,7 +4,11 @@ from tradiba.events import Event
 from tradiba.market.models import Candle
 
 from .models import SwingPoint, Trend, LiquidityPool, OrderBlock
+from .narrative import MarketNarrative
 
+@dataclass(slots=True, frozen=True)
+class MarketNarrativeUpdatedEvent(Event):
+    narrative: MarketNarrative
 
 @dataclass(slots=True, frozen=True)
 class OrderBlockCreatedEvent(Event):

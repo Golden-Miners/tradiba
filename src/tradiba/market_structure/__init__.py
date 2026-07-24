@@ -12,6 +12,7 @@ from .events import (
     OrderBlockTouchedEvent,
     OrderBlockMitigatedEvent,
     OrderBlockInvalidatedEvent,
+    MarketNarrativeUpdatedEvent,
 )
 from .models import (
     SwingPoint,
@@ -23,13 +24,17 @@ from .models import (
     OrderBlock,
     OrderBlockDirection,
     OrderBlockStatus,
+    FairValueGap,
+    FVGStatus,
 )
+from .narrative import MarketNarrative, MarketBias
 from .service import MarketStructureService
 from .detector import SwingDetector
 from .bos import BOSDetector
 from .choch import CHOCHDetector
 from .liquidity import LiquidityDetector
 from .order_block import OrderBlockDetector
+from .narrative_builder import NarrativeBuilder
 
 __all__ = (
     # Models
@@ -42,6 +47,10 @@ __all__ = (
     "OrderBlock",
     "OrderBlockDirection",
     "OrderBlockStatus",
+    "FairValueGap",
+    "FVGStatus",
+    "MarketNarrative",
+    "MarketBias",
     # Services
     "MarketStructureService",
     "SwingDetector",
@@ -49,6 +58,7 @@ __all__ = (
     "CHOCHDetector",
     "LiquidityDetector",
     "OrderBlockDetector",
+    "NarrativeBuilder",
     # Events
     "SwingHighEvent",
     "SwingLowEvent",
@@ -63,4 +73,5 @@ __all__ = (
     "OrderBlockTouchedEvent",
     "OrderBlockMitigatedEvent",
     "OrderBlockInvalidatedEvent",
+    "MarketNarrativeUpdatedEvent",
 )

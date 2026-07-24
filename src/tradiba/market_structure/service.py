@@ -7,14 +7,17 @@ from .bos import BOSDetector
 from .choch import CHOCHDetector
 from .liquidity import LiquidityDetector
 from .order_block import OrderBlockDetector
+from .narrative_builder import NarrativeBuilder
 
 from .events import (
     SwingHighEvent,
+    SwingLowEvent,
     BullishBOSEvent,
     BearishBOSEvent,
     TrendChangedEvent,
     BullishCHOCHEvent,
     BearishCHOCHEvent,
+    MarketNarrativeUpdatedEvent,
 )
 
 
@@ -30,6 +33,7 @@ class MarketStructureService(Service):
         self.choch = CHOCHDetector()
         self.liquidity = LiquidityDetector()
         self.ob_detector = OrderBlockDetector()
+        self.narrative_builder = NarrativeBuilder()
 
     def on_candle_closed(self, event: CandleClosedEvent):
 
@@ -82,6 +86,10 @@ class MarketStructureService(Service):
         ob_update_events = self.ob_detector.update_candle(event.candle, self.state)
         for e in ob_update_events:
             self.bus.publish(e)
+
+        # 6. Build Market Narrative
+        narrative = self.narrative_builder.build(self.state, event.candle)
+        self.bus.publish(MarketNarrativeUpdatedEvent(narrative=narrative))
 
     def start(self):
         pass
