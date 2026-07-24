@@ -1,6 +1,8 @@
 from tradiba.market.events import CandleClosedEvent
 
 from .detector import SwingDetector
+from .bos import BOSDetector
+from .events import SwingHighEvent
 
 
 class MarketStructureService:
@@ -9,18 +11,29 @@ class MarketStructureService:
         self,
         event_bus,
     ):
-        self._event_bus = event_bus
-        self._detector = SwingDetector()
+        self.bus = event_bus
+        self.swing_detector = SwingDetector()
+        self.bos = BOSDetector()
 
     def on_candle_closed(
         self,
         event: CandleClosedEvent,
     ):
 
-        swing = self._detector.update(event.candle)
+        swing = self.swing_detector.update(event.candle)
 
-        if swing is not None:
-            self._event_bus.publish(swing)
+        if swing:
+
+            self.bus.publish(swing)
+
+            if isinstance(swing, SwingHighEvent):
+                self.bos.update_high(swing.swing)
+
+            else:
+                self.bos.update_low(swing.swing)
+
+        for e in self.bos.update_candle(event.candle):
+            self.bus.publish(e)
 
     def start(self):
         pass

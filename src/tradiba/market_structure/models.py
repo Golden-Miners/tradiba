@@ -24,3 +24,10 @@ class SwingPoint:
     price: float
 
     candle: Candle
+
+
+class Trend(Enum):
+    UNKNOWN = "UNKNOWN"
+    BULLISH = "BULLISH"
+    BEARISH = "BEARISH"
+    RANGE = "RANGE"
