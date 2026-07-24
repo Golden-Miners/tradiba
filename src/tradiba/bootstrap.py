@@ -76,7 +76,9 @@ def bootstrap() -> Application:
         scheduler=scheduler,
     )
 
+    from tradiba.market.events import CandleClosedEvent
     market_structure = MarketStructureService(event_bus=event_bus)
+    event_bus.subscribe(CandleClosedEvent, market_structure.on_candle_closed)
 
     # SMC Intelligence Services
     confluence_engine = ConfluenceEngine(event_bus=event_bus)

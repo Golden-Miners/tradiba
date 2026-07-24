@@ -1,46 +1,29 @@
-"""
-Market structure analysis service.
-
-Subscribes to :class:`CandleClosedEvent` and pushes candles through the
-MarketStructureEngine, publishing SMC domain events.
-"""
-
-from __future__ import annotations
-
-from tradiba.core.service import Service
-from tradiba.events import EventBus
-from tradiba.logging import get_logger
 from tradiba.market.events import CandleClosedEvent
-from tradiba.market_structure.engine import MarketStructureEngine
 
-logger = get_logger(__name__)
+from .detector import SwingDetector
 
 
-class MarketStructureService(Service):
-    """
-    Subscribes to incoming candles, feeds them to the MarketStructureEngine,
-    and publishes the resulting events to the EventBus.
-    """
+class MarketStructureService:
 
-    def __init__(self, event_bus: EventBus) -> None:
+    def __init__(
+        self,
+        event_bus,
+    ):
         self._event_bus = event_bus
-        self._engine = MarketStructureEngine()
+        self._detector = SwingDetector()
 
-    def start(self) -> None:
-        self._event_bus.subscribe(CandleClosedEvent, self._on_candle)
-        logger.info("Market structure service started.")
+    def on_candle_closed(
+        self,
+        event: CandleClosedEvent,
+    ):
 
-    def stop(self) -> None:
-        self._event_bus.unsubscribe(CandleClosedEvent, self._on_candle)
-        logger.info("Market structure service stopped.")
+        swing = self._detector.update(event.candle)
 
-    def _on_candle(self, event: CandleClosedEvent) -> None:
-        candle = event.candle
-        
-        # Pass candle to pure domain engine
-        new_events = self._engine.on_candle(candle)
-            
-        # Publish all generated events for the cycle
-        for ev in new_events:
-            self._event_bus.publish(ev)
-            logger.debug("Published market structure event: %s", ev.__class__.__name__)
+        if swing is not None:
+            self._event_bus.publish(swing)
+
+    def start(self):
+        pass
+
+    def stop(self):
+        pass
