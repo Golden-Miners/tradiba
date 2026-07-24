@@ -6,6 +6,7 @@ from .detector import SwingDetector
 from .bos import BOSDetector
 from .choch import CHOCHDetector
 from .liquidity import LiquidityDetector
+from .order_block import OrderBlockDetector
 
 from .events import (
     SwingHighEvent,
@@ -28,6 +29,7 @@ class MarketStructureService(Service):
         self.bos = BOSDetector()
         self.choch = CHOCHDetector()
         self.liquidity = LiquidityDetector()
+        self.ob_detector = OrderBlockDetector()
 
     def on_candle_closed(self, event: CandleClosedEvent):
 
@@ -50,8 +52,12 @@ class MarketStructureService(Service):
         for e in bos_events:
             if isinstance(e, BullishBOSEvent):
                 self.state.last_broken_high = e.broken_price
+                for ob_e in self.ob_detector.on_bullish_bos(e, self.state):
+                    self.bus.publish(ob_e)
             elif isinstance(e, BearishBOSEvent):
                 self.state.last_broken_low = e.broken_price
+                for ob_e in self.ob_detector.on_bearish_bos(e, self.state):
+                    self.bus.publish(ob_e)
             elif isinstance(e, TrendChangedEvent):
                 self.state.trend = e.current
                 # Reset CHOCH detection on new trend confirmation
@@ -70,6 +76,11 @@ class MarketStructureService(Service):
         # 4. Liquidity Sweep Detection
         sweep_events = self.liquidity.check_sweep(event.candle, self.state)
         for e in sweep_events:
+            self.bus.publish(e)
+
+        # 5. Order Block Update (Touches & Mitigation)
+        ob_update_events = self.ob_detector.update_candle(event.candle, self.state)
+        for e in ob_update_events:
             self.bus.publish(e)
 
     def start(self):

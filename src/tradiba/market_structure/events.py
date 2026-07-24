@@ -3,7 +3,27 @@ from dataclasses import dataclass
 from tradiba.events import Event
 from tradiba.market.models import Candle
 
-from .models import SwingPoint, Trend, LiquidityPool
+from .models import SwingPoint, Trend, LiquidityPool, OrderBlock
+
+
+@dataclass(slots=True, frozen=True)
+class OrderBlockCreatedEvent(Event):
+    block: OrderBlock
+
+
+@dataclass(slots=True, frozen=True)
+class OrderBlockTouchedEvent(Event):
+    block: OrderBlock
+
+
+@dataclass(slots=True, frozen=True)
+class OrderBlockMitigatedEvent(Event):
+    block: OrderBlock
+
+
+@dataclass(slots=True, frozen=True)
+class OrderBlockInvalidatedEvent(Event):
+    block: OrderBlock
 
 
 @dataclass(slots=True, frozen=True)

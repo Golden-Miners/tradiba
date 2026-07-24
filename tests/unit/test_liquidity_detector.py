@@ -78,7 +78,7 @@ def test_buy_side_sweep():
     detector.update_swing(swing(1.1050, SwingType.HIGH), state)
     
     # Next candle sweeps
-    c = candle(1.1040, h=1.1055, l=1.1030)
+    c = candle(1.1040, h=1.1055, low=1.1030)
     sweep_events = detector.check_sweep(c, state)
     
     assert len(sweep_events) == 1
@@ -94,7 +94,7 @@ def test_sell_side_sweep():
     detector.update_swing(swing(1.0900, SwingType.LOW), state)
     
     # Next candle sweeps
-    c = candle(1.0910, h=1.0920, l=1.0897)
+    c = candle(1.0910, h=1.0920, low=1.0897)
     sweep_events = detector.check_sweep(c, state)
     
     assert len(sweep_events) == 1
@@ -109,7 +109,7 @@ def test_no_sweep_if_not_minimum_touches():
     detector.update_swing(swing(1.0900, SwingType.LOW), state)
     
     # Next candle sweeps the level, but since touches=1, it's not a valid pool
-    c = candle(1.0910, h=1.0920, l=1.0897)
+    c = candle(1.0910, h=1.0920, low=1.0897)
     sweep_events = detector.check_sweep(c, state)
     
     assert len(sweep_events) == 0

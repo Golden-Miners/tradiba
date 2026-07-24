@@ -8,6 +8,10 @@ from .events import (
     BearishCHOCHEvent,
     LiquidityCreatedEvent,
     LiquiditySweptEvent,
+    OrderBlockCreatedEvent,
+    OrderBlockTouchedEvent,
+    OrderBlockMitigatedEvent,
+    OrderBlockInvalidatedEvent,
 )
 from .models import (
     SwingPoint,
@@ -16,12 +20,16 @@ from .models import (
     LiquidityPool,
     LiquidityType,
     LiquidityStatus,
+    OrderBlock,
+    OrderBlockDirection,
+    OrderBlockStatus,
 )
 from .service import MarketStructureService
 from .detector import SwingDetector
 from .bos import BOSDetector
 from .choch import CHOCHDetector
 from .liquidity import LiquidityDetector
+from .order_block import OrderBlockDetector
 
 __all__ = (
     # Models
@@ -31,12 +39,16 @@ __all__ = (
     "LiquidityPool",
     "LiquidityType",
     "LiquidityStatus",
+    "OrderBlock",
+    "OrderBlockDirection",
+    "OrderBlockStatus",
     # Services
     "MarketStructureService",
     "SwingDetector",
     "BOSDetector",
     "CHOCHDetector",
     "LiquidityDetector",
+    "OrderBlockDetector",
     # Events
     "SwingHighEvent",
     "SwingLowEvent",
@@ -47,4 +59,8 @@ __all__ = (
     "BearishCHOCHEvent",
     "LiquidityCreatedEvent",
     "LiquiditySweptEvent",
+    "OrderBlockCreatedEvent",
+    "OrderBlockTouchedEvent",
+    "OrderBlockMitigatedEvent",
+    "OrderBlockInvalidatedEvent",
 )

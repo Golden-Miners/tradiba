@@ -55,3 +55,28 @@ class LiquidityPool:
     tolerance: float
     created_at: datetime
     status: LiquidityStatus = LiquidityStatus.ACTIVE
+
+
+class OrderBlockDirection(Enum):
+    BULLISH = "BULLISH"
+    BEARISH = "BEARISH"
+
+
+class OrderBlockStatus(Enum):
+    ACTIVE = "ACTIVE"
+    TOUCHED = "TOUCHED"
+    MITIGATED = "MITIGATED"
+    INVALIDATED = "INVALIDATED"
+
+
+@dataclass(slots=True)
+class OrderBlock:
+    id: str
+    symbol: str
+    timeframe: str
+    direction: OrderBlockDirection
+    high: float
+    low: float
+    origin_bos_price: float
+    created_at: datetime
+    status: OrderBlockStatus = OrderBlockStatus.ACTIVE
