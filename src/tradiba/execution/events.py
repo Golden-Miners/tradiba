@@ -1,21 +1,19 @@
 from dataclasses import dataclass
+from tradiba.events.base import Event
+from .models import ExecutionReport
 
-from tradiba.events import Event
-
-from .models.order import Order
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(slots=True, frozen=True)
 class OrderSubmittedEvent(Event):
-    order: Order
+    report: ExecutionReport
 
-
-@dataclass(frozen=True, slots=True)
+@dataclass(slots=True, frozen=True)
 class OrderFilledEvent(Event):
-    order: Order
+    report: ExecutionReport
 
-
-@dataclass(frozen=True, slots=True)
+@dataclass(slots=True, frozen=True)
 class OrderRejectedEvent(Event):
-    order: Order
-    reason: str
+    report: ExecutionReport
+
+@dataclass(slots=True, frozen=True)
+class ExecutionFailedEvent(Event):
+    report: ExecutionReport

@@ -1,97 +1,101 @@
-from __future__ import annotations
-
-from typing import Dict
-
-from tradiba.core.service import Service
-from tradiba.events import EventBus
-from tradiba.logging import get_logger
-from tradiba.ports.execution import ExecutionProvider
-from tradiba.strategy import Direction, Signal
-
-from tradiba.risk.events import RiskApprovedEvent
-from .events import OrderFilledEvent, OrderRejectedEvent, OrderSubmittedEvent
-from .models.order import Order, OrderSide, OrderType
-from tradiba.ports.clock import get_clock
+from tradiba.events.bus import EventBus
+from .models import ExecutionReport, ExecutionStatus
+from .broker import BrokerExecutor
+from .repository import ExecutionRepository
+from .validator import ExecutionValidator
+from .retry import RetryPolicy, RecoverableExecutionError
+from .events import OrderSubmittedEvent, OrderFilledEvent, OrderRejectedEvent, ExecutionFailedEvent
+from tradiba.risk.models import TradePlan
+from tradiba.portfolio.aggregate import Portfolio
 import uuid
+from datetime import datetime, timezone
 
-logger = get_logger(__name__)
-
-
-class ExecutionService(Service):
-    """
-    Executes trading signals via an ExecutionProvider.
-    Maintains order history and publishes execution events.
-    """
-
+class ExecutionService:
     def __init__(
         self,
-        event_bus: EventBus,
-        provider: ExecutionProvider,
-    ) -> None:
-        self._event_bus = event_bus
-        self._provider = provider
-        self._orders: Dict[str, Order] = {}
+        executor: BrokerExecutor,
+        repository: ExecutionRepository,
+        validator: ExecutionValidator,
+        bus: EventBus,
+        portfolio: Portfolio
+    ):
+        self.executor = executor
+        self.repository = repository
+        self.validator = validator
+        self.bus = bus
+        self.portfolio = portfolio
+        self.retry_policy = RetryPolicy()
 
-    def start(self) -> None:
-        self._event_bus.subscribe(RiskApprovedEvent, self._on_approved_signal)
-        logger.info("ExecutionService started.")
+    def execute(self, trade_plan: TradePlan) -> ExecutionReport:
+        # Idempotency check: use signal_id as the execution key
+        key = trade_plan.signal_id
+        existing = self.repository.find_by_execution_key(key)
+        if existing:
+            return existing
 
-    def stop(self) -> None:
-        self._event_bus.unsubscribe(RiskApprovedEvent, self._on_approved_signal)
-        logger.info("ExecutionService stopped.")
-
-    def _on_approved_signal(self, event: RiskApprovedEvent) -> None:
-        self.execute(event.signal)
-
-    def execute(self, signal: Signal) -> None:
-        """Execute a trading signal."""
-        logger.info("Executing signal: %s", signal)
-        
-        # Determine side and default volume (using a dummy volume for now if not provided,
-        # but risk engine should provide size. We'll use 0.01 standard lots).
-        volume = 0.01
-        
-        order_side = OrderSide.BUY if signal.direction == Direction.LONG else OrderSide.SELL
-        order_type = OrderType.MARKET # We default to market execution for now
-        
-        order = Order(
-            id=str(uuid.uuid4()),
-            symbol=signal.symbol,
-            side=order_side,
-            order_type=order_type,
-            volume=volume,
-            price=signal.entry,
-            stop_loss=signal.stop_loss,
-            take_profit=signal.take_profit,
-            created_at=get_clock().now(),
-        )
-        
-        self._orders[order.id] = order
-        self._event_bus.publish(OrderSubmittedEvent(order=order))
-        
+        # Validation
         try:
-            if order.side == OrderSide.BUY:
-                result = self._provider.buy_market(
-                    symbol=order.symbol,
-                    volume=order.volume,
-                    sl=order.stop_loss,
-                    tp=order.take_profit,
-                )
-            else:
-                result = self._provider.sell_market(
-                    symbol=order.symbol,
-                    volume=order.volume,
-                    sl=order.stop_loss,
-                    tp=order.take_profit,
-                )
-                
-            if result.success:
-                logger.info("Order executed successfully. Ticket: %s", result.ticket)
-                self._event_bus.publish(OrderFilledEvent(order=order))
-            else:
-                logger.warning("Order rejected by broker: %s", result.message)
-                self._event_bus.publish(OrderRejectedEvent(order=order, reason=result.message))
-                
+            self.validator.validate(trade_plan, self.portfolio)
         except Exception as e:
-            logger.exception("Execution failed.")
-            self._event_bus.publish(OrderRejectedEvent(order=order, reason=str(e)))
+            report = ExecutionReport(
+                execution_id=str(uuid.uuid4()),
+                trade_plan_id=trade_plan.signal_id,
+                broker_order_id=None,
+                symbol=trade_plan.symbol,
+                status=ExecutionStatus.FAILED,
+                requested_price=trade_plan.entry,
+                executed_price=None,
+                volume=trade_plan.position_size,
+                submitted_at=datetime.now(timezone.utc),
+                completed_at=datetime.now(timezone.utc),
+                reason=str(e)
+            )
+            self.repository.save(report)
+            self.publish(report)
+            return report
+
+        # Execution with Retries
+        try:
+            report = self.retry_policy.execute(self.executor.submit, trade_plan)
+        except RecoverableExecutionError as e:
+            report = ExecutionReport(
+                execution_id=str(uuid.uuid4()),
+                trade_plan_id=trade_plan.signal_id,
+                broker_order_id=None,
+                symbol=trade_plan.symbol,
+                status=ExecutionStatus.FAILED,
+                requested_price=trade_plan.entry,
+                executed_price=None,
+                volume=trade_plan.position_size,
+                submitted_at=datetime.now(timezone.utc),
+                completed_at=datetime.now(timezone.utc),
+                reason="Retry exhaustion: " + str(e)
+            )
+        except Exception as e:
+            report = ExecutionReport(
+                execution_id=str(uuid.uuid4()),
+                trade_plan_id=trade_plan.signal_id,
+                broker_order_id=None,
+                symbol=trade_plan.symbol,
+                status=ExecutionStatus.REJECTED,
+                requested_price=trade_plan.entry,
+                executed_price=None,
+                volume=trade_plan.position_size,
+                submitted_at=datetime.now(timezone.utc),
+                completed_at=datetime.now(timezone.utc),
+                reason="Broker rejection: " + str(e)
+            )
+
+        self.repository.save(report)
+        self.publish(report)
+        return report
+
+    def publish(self, report: ExecutionReport):
+        if report.status == ExecutionStatus.SUBMITTED:
+            self.bus.publish(OrderSubmittedEvent(report))
+        elif report.status == ExecutionStatus.FILLED:
+            self.bus.publish(OrderFilledEvent(report))
+        elif report.status == ExecutionStatus.REJECTED:
+            self.bus.publish(OrderRejectedEvent(report))
+        elif report.status == ExecutionStatus.FAILED:
+            self.bus.publish(ExecutionFailedEvent(report))
