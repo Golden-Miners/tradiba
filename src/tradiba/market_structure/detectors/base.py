@@ -3,7 +3,7 @@ from typing import List
 
 from tradiba.events import Event
 from tradiba.mt5.models import Candle
-from tradiba.market_structure.state import TimeframeState
+from tradiba.market_structure.state import MarketStructureState
 
 class Detector(ABC):
     """
