@@ -81,6 +81,8 @@ class NarrativeBuilder:
         return MarketNarrative(
             symbol=candle.symbol,
             timeframe=candle.timeframe.name if hasattr(candle.timeframe, "name") else str(candle.timeframe),
+            current_price=candle.close,
+            timestamp=candle.open_time,
             trend=state.trend,
             bias=bias,
             confidence=confidence,

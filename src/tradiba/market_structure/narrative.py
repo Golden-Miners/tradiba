@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 from enum import Enum
+from datetime import datetime
 
 from .models import (
     Trend,
@@ -20,6 +21,8 @@ class MarketBias(Enum):
 class MarketNarrative:
     symbol: str
     timeframe: str
+    current_price: float
+    timestamp: datetime
     trend: Trend
     bias: MarketBias
     confidence: int = 0

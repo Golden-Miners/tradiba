@@ -1,0 +1,2 @@
+class StrategyRegistrationError(ValueError):
+    pass
