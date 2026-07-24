@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
+from tradiba.execution.models.result import TradeResult
+
 
 class ExecutionProvider(ABC):
 
@@ -13,7 +15,7 @@ class ExecutionProvider(ABC):
         volume: float,
         sl: float,
         tp: float,
-    ):
+    ) -> TradeResult:
         ...
 
     @abstractmethod
@@ -24,5 +26,13 @@ class ExecutionProvider(ABC):
         volume: float,
         sl: float,
         tp: float,
-    ):
+    ) -> TradeResult:
+        ...
+
+    @abstractmethod
+    def account_info(self):
+        ...
+
+    @abstractmethod
+    def positions(self):
         ...

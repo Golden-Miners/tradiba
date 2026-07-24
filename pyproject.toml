@@ -6,7 +6,13 @@ requires-python = ">=3.11"
 authors = [
     { name = "Golden-Miners" }
 ]
-dependencies = []
+dependencies = [
+    "MetaTrader5",
+    "SQLAlchemy>=2.0",
+    "alembic>=1.13",
+    "fastapi",
+    "uvicorn"
+]
 
 [build-system]
 requires = ["hatchling>=1.27.0"]

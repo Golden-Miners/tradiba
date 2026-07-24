@@ -27,3 +27,4 @@ class Signal:
     take_profit: float
     confidence: float
     strategy_id: str
+    volume: float = 0.01

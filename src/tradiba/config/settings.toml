@@ -1,0 +1,23 @@
+[mt5]
+terminal_path = ""
+login = 0
+password = ""
+server = ""
+timeout = 60000
+
+[database]
+url = "sqlite:///data/tradiba.db"
+
+[api]
+host = "127.0.0.1"
+port = 8000
+
+[strategies.example_bos]
+enabled = false
+risk = 0.01
+
+[risk]
+max_position_size = 2.0
+max_open_positions = 5
+max_daily_loss = 3.0
+max_symbol_positions = 2

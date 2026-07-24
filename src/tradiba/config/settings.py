@@ -13,15 +13,16 @@ class MT5Settings:
     login: int
     password: str
     server: str
+    timeout: int = 60000
 
 
 @dataclass(slots=True)
 class DatabaseSettings:
-    path: str
+    url: str
 
 
 @dataclass(slots=True)
-class DashboardSettings:
+class APISettings:
     host: str
     port: int
 
@@ -30,5 +31,6 @@ class DashboardSettings:
 class Settings:
     mt5: MT5Settings
     database: DatabaseSettings
-    dashboard: DashboardSettings
+    api: APISettings
     strategies: dict[str, dict] = __import__("dataclasses").field(default_factory=dict)
+    risk: dict[str, float] = __import__("dataclasses").field(default_factory=dict)
