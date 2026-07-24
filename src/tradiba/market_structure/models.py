@@ -31,3 +31,27 @@ class Trend(Enum):
     BULLISH = "BULLISH"
     BEARISH = "BEARISH"
     RANGE = "RANGE"
+
+
+class LiquidityType(Enum):
+    BUY_SIDE = "BUY_SIDE"
+    SELL_SIDE = "SELL_SIDE"
+
+
+class LiquidityStatus(Enum):
+    ACTIVE = "ACTIVE"
+    SWEPT = "SWEPT"
+    INVALIDATED = "INVALIDATED"
+
+
+@dataclass(slots=True)
+class LiquidityPool:
+    id: str
+    symbol: str
+    timeframe: str
+    price: float
+    liquidity_type: LiquidityType
+    touches: int
+    tolerance: float
+    created_at: datetime
+    status: LiquidityStatus = LiquidityStatus.ACTIVE

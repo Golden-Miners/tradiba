@@ -3,7 +3,17 @@ from dataclasses import dataclass
 from tradiba.events import Event
 from tradiba.market.models import Candle
 
-from .models import SwingPoint, Trend
+from .models import SwingPoint, Trend, LiquidityPool
+
+
+@dataclass(slots=True, frozen=True)
+class LiquidityCreatedEvent(Event):
+    pool: LiquidityPool
+
+
+@dataclass(slots=True, frozen=True)
+class LiquiditySweptEvent(Event):
+    pool: LiquidityPool
 
 
 @dataclass(slots=True, frozen=True)

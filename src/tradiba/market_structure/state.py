@@ -1,7 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
-from .models import SwingPoint
-from .models import Trend
+from .models import SwingPoint, Trend, LiquidityPool
 
 
 @dataclass(slots=True)
@@ -15,3 +14,5 @@ class MarketStructureState:
     choch_detected: bool = False
 
     trend: Trend = Trend.UNKNOWN
+
+    active_liquidity: list[LiquidityPool] = field(default_factory=list)

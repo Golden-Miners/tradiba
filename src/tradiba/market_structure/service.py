@@ -5,6 +5,7 @@ from .state import MarketStructureState
 from .detector import SwingDetector
 from .bos import BOSDetector
 from .choch import CHOCHDetector
+from .liquidity import LiquidityDetector
 
 from .events import (
     SwingHighEvent,
@@ -26,6 +27,7 @@ class MarketStructureService(Service):
         self.swing_detector = SwingDetector()
         self.bos = BOSDetector()
         self.choch = CHOCHDetector()
+        self.liquidity = LiquidityDetector()
 
     def on_candle_closed(self, event: CandleClosedEvent):
 
@@ -38,6 +40,10 @@ class MarketStructureService(Service):
                 self.state.last_swing_low = swing.swing
                 
             self.bus.publish(swing)
+
+            # Liquidity Creation Detection
+            for e in self.liquidity.update_swing(swing.swing, self.state):
+                self.bus.publish(e)
 
         # 2. BOS Detection
         bos_events = self.bos.update_candle(event.candle, self.state)
@@ -59,6 +65,11 @@ class MarketStructureService(Service):
             if isinstance(e, BullishCHOCHEvent) or isinstance(e, BearishCHOCHEvent):
                 self.state.choch_detected = True
                 
+            self.bus.publish(e)
+
+        # 4. Liquidity Sweep Detection
+        sweep_events = self.liquidity.check_sweep(event.candle, self.state)
+        for e in sweep_events:
             self.bus.publish(e)
 
     def start(self):
