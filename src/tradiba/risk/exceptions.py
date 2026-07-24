@@ -1,0 +1,2 @@
+class RiskException(Exception):
+    pass

@@ -1,15 +1,11 @@
 from dataclasses import dataclass
-
 from tradiba.events import Event
-from tradiba.strategy.models import Signal
+from .models import TradePlan
 
+@dataclass(slots=True, frozen=True)
+class TradeApprovedEvent(Event):
+    plan: TradePlan
 
-@dataclass(frozen=True, slots=True)
-class RiskApprovedEvent(Event):
-    signal: Signal
-
-
-@dataclass(frozen=True, slots=True)
-class RiskRejectedEvent(Event):
-    signal: Signal
-    reason: str
+@dataclass(slots=True, frozen=True)
+class TradeRejectedEvent(Event):
+    plan: TradePlan
