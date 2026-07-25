@@ -1,14 +1,14 @@
-from tradiba.strategy.models import Signal
+from tradiba.strategy.models import TradingSignal
 
 from ..base import RiskRule
-from ..models.risk_result import RiskResult
+from ..models import TradePlan
 
 
 class DailyLossRule(RiskRule):
 
     def validate(
         self,
-        signal: Signal,
-    ) -> RiskResult:
+        signal: TradingSignal,
+    ) -> TradePlan:
         # Implementation comes later after persistence exists.
-        return RiskResult(True)
+        return TradePlan(True)

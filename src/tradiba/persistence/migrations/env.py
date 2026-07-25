@@ -21,7 +21,7 @@ if config.config_file_name is not None:
 import os  # noqa: E402
 import sys  # noqa: E402
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
-from tradiba.persistence.base import Base  # noqa: E402
+from tradiba.persistence.models import Base  # noqa: E402
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,

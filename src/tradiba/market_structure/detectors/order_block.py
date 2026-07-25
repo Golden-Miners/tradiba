@@ -1,13 +1,12 @@
 from typing import List
-from tradiba.events import Event
+from tradiba.events import DomainEvent
 from tradiba.mt5.models import Candle
-from tradiba.market_structure.state import TimeframeState
-from tradiba.market_structure.models import OrderBlock, Trend, ZoneStatus
+from tradiba.market_structure.state import MarketStructureState
+from tradiba.market_structure.models import OrderBlock, Trend, LiquidityStatus
 from tradiba.market_structure.events import (
-    BOSEvent,
     OrderBlockCreatedEvent,
-    OrderBlockFilledEvent,
-    OrderBlockArchivedEvent,
+    OrderBlockMitigatedEvent,
+    OrderBlockInvalidatedEvent,
 )
 from .base import Detector
 
@@ -22,8 +21,8 @@ class OrderBlockDetector(Detector):
         OPEN → ARCHIVED (price *closes* through the entire OB against its direction)
     """
 
-    def update(self, candle: Candle, state: TimeframeState, current_events: List[Event]) -> List[Event]:
-        events: List[Event] = []
+    def update(self, candle: Candle, state: MarketStructureState, current_events: List[DomainEvent]) -> List[DomainEvent]:
+        events: List[DomainEvent] = []
 
         # 1. Lifecycle management of existing order blocks
         removed_obs: List[OrderBlock] = []
@@ -33,32 +32,32 @@ class OrderBlockDetector(Detector):
                 # Mitigation: price trades fully through the zone (low <= zone_low)
                 # Invalidation: price *closes* below zone_low (bearish invalidation)
                 if candle.low <= ob.zone_low:
-                    ob.status = ZoneStatus.FILLED
+                    ob.status = LiquidityStatus.FILLED
                     removed_obs.append(ob)
-                    events.append(OrderBlockFilledEvent(ob=ob))
+                    events.append(OrderBlockMitigatedEvent(ob=ob))
                 elif candle.low <= ob.zone_high:
-                    ob.status = ZoneStatus.PARTIAL_FILL
+                    ob.status = LiquidityStatus.PARTIAL_FILL
                 # Invalidation: price closes decisively below the OB
                 if ob not in removed_obs and candle.close < ob.zone_low:
-                    ob.status = ZoneStatus.ARCHIVED
+                    ob.status = LiquidityStatus.ARCHIVED
                     removed_obs.append(ob)
-                    events.append(OrderBlockArchivedEvent(ob=ob))
+                    events.append(OrderBlockInvalidatedEvent(ob=ob))
 
             elif ob.direction == Trend.BEARISH:
                 # Bearish OB: we expect price to retrace UP into it then drop
                 # Mitigation: price trades fully through the zone (high >= zone_high)
                 # Invalidation: price *closes* above zone_high (bullish invalidation)
                 if candle.high >= ob.zone_high:
-                    ob.status = ZoneStatus.FILLED
+                    ob.status = LiquidityStatus.FILLED
                     removed_obs.append(ob)
-                    events.append(OrderBlockFilledEvent(ob=ob))
+                    events.append(OrderBlockMitigatedEvent(ob=ob))
                 elif candle.high >= ob.zone_low:
-                    ob.status = ZoneStatus.PARTIAL_FILL
+                    ob.status = LiquidityStatus.PARTIAL_FILL
                 # Invalidation: price closes decisively above the OB
                 if ob not in removed_obs and candle.close > ob.zone_high:
-                    ob.status = ZoneStatus.ARCHIVED
+                    ob.status = LiquidityStatus.ARCHIVED
                     removed_obs.append(ob)
-                    events.append(OrderBlockArchivedEvent(ob=ob))
+                    events.append(OrderBlockInvalidatedEvent(ob=ob))
 
         for ob in removed_obs:
             state.active_order_blocks.remove(ob)
@@ -74,7 +73,7 @@ class OrderBlockDetector(Detector):
         return events
 
     def _detect_order_block(
-        self, candles, bos_event: BOSEvent, current_time, candle_count: int,
+        self, candles, bos_event, current_time, candle_count: int,
     ) -> OrderBlock | None:
         if len(candles) < 2:
             return None
@@ -104,7 +103,7 @@ class OrderBlockDetector(Detector):
                 zone_low=opposing_candle.low,
                 direction=bos_event.direction,
                 created_at=current_time,
-                status=ZoneStatus.OPEN,
+                status=LiquidityStatus.OPEN,
                 originating_bos=bos_event.bos,
                 created_candle_count=candle_count,
             )

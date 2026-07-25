@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from .models import TradingSignal
-from tradiba.events.base import Event
+from tradiba.events.event import DomainEvent
 
 @dataclass(slots=True, frozen=True)
-class TradingSignalCreatedEvent(Event):
+class TradingSignalCreatedEvent(DomainEvent):
     signal: TradingSignal

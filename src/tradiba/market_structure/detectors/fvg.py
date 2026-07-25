@@ -1,8 +1,8 @@
 from typing import List
-from tradiba.events import Event
+from tradiba.events import DomainEvent
 from tradiba.mt5.models import Candle
-from tradiba.market_structure.state import TimeframeState
-from tradiba.market_structure.models import FairValueGap, Trend, ZoneStatus
+from tradiba.market_structure.state import MarketStructureState
+from tradiba.market_structure.models import FairValueGap, Trend, LiquidityStatus
 from tradiba.market_structure.events import (
     FairValueGapCreatedEvent,
     FairValueGapFilledEvent,
@@ -24,8 +24,8 @@ class FVGDetector(Detector):
     def __init__(self, max_age: int = 50) -> None:
         self.max_age = max_age
 
-    def update(self, candle: Candle, state: TimeframeState, current_events: List[Event]) -> List[Event]:
-        events: List[Event] = []
+    def update(self, candle: Candle, state: MarketStructureState, current_events: List[DomainEvent]) -> List[DomainEvent]:
+        events: List[DomainEvent] = []
 
         # 1. Lifecycle management of existing FVGs
         removed_fvgs: List[FairValueGap] = []
@@ -33,28 +33,28 @@ class FVGDetector(Detector):
             # Check mitigation / partial fill
             if fvg.direction == Trend.BULLISH:
                 if candle.low <= fvg.lower:
-                    fvg.status = ZoneStatus.FILLED
+                    fvg.status = LiquidityStatus.FILLED
                     removed_fvgs.append(fvg)
                     events.append(FairValueGapFilledEvent(
                         symbol=state.symbol, timeframe=state.timeframe, fvg=fvg,
                     ))
                 elif candle.low <= fvg.upper:
-                    fvg.status = ZoneStatus.PARTIAL_FILL
+                    fvg.status = LiquidityStatus.PARTIAL_FILL
             elif fvg.direction == Trend.BEARISH:
                 if candle.high >= fvg.upper:
-                    fvg.status = ZoneStatus.FILLED
+                    fvg.status = LiquidityStatus.FILLED
                     removed_fvgs.append(fvg)
                     events.append(FairValueGapFilledEvent(
                         symbol=state.symbol, timeframe=state.timeframe, fvg=fvg,
                     ))
                 elif candle.high >= fvg.lower:
-                    fvg.status = ZoneStatus.PARTIAL_FILL
+                    fvg.status = LiquidityStatus.PARTIAL_FILL
 
             # Age-based invalidation
             if fvg not in removed_fvgs:
                 age = state.candle_count - fvg.created_candle_count
                 if age > self.max_age:
-                    fvg.status = ZoneStatus.ARCHIVED
+                    fvg.status = LiquidityStatus.ARCHIVED
                     removed_fvgs.append(fvg)
                     events.append(FairValueGapArchivedEvent(
                         symbol=state.symbol, timeframe=state.timeframe, fvg=fvg,
@@ -77,7 +77,7 @@ class FVGDetector(Detector):
                 lower=c1.high,
                 direction=Trend.BULLISH,
                 created_candle_count=state.candle_count,
-                status=ZoneStatus.OPEN,
+                status=LiquidityStatus.OPEN,
             )
             state.active_fvgs.append(fvg)
             events.append(FairValueGapCreatedEvent(
@@ -91,7 +91,7 @@ class FVGDetector(Detector):
                 lower=c3.high,
                 direction=Trend.BEARISH,
                 created_candle_count=state.candle_count,
-                status=ZoneStatus.OPEN,
+                status=LiquidityStatus.OPEN,
             )
             state.active_fvgs.append(fvg)
             events.append(FairValueGapCreatedEvent(

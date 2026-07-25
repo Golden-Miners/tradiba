@@ -11,7 +11,6 @@ from .narrative_builder import NarrativeBuilder
 
 from .events import (
     SwingHighEvent,
-    SwingLowEvent,
     BullishBOSEvent,
     BearishBOSEvent,
     TrendChangedEvent,

@@ -1,29 +1,29 @@
 from dataclasses import dataclass
 
 from .models import Candle, Tick
-from tradiba.events import Event
+from tradiba.events import DomainEvent
 
 
 @dataclass(slots=True, frozen=True)
-class CandleClosedEvent(Event):
+class CandleClosedEvent(DomainEvent):
     candle: Candle
 
 
 @dataclass(slots=True, frozen=True)
-class CandleUpdatedEvent(Event):
+class CandleUpdatedEvent(DomainEvent):
     candle: Candle
 
 
 @dataclass(slots=True, frozen=True)
-class TickEvent(Event):
+class TickEvent(DomainEvent):
     tick: Tick
 
 
 @dataclass(slots=True, frozen=True)
-class SymbolConnectedEvent(Event):
+class SymbolConnectedEvent(DomainEvent):
     symbol: str
 
 
 @dataclass(slots=True, frozen=True)
-class SymbolDisconnectedEvent(Event):
+class SymbolDisconnectedEvent(DomainEvent):
     symbol: str

@@ -5,6 +5,9 @@ from .models import SwingPoint, Trend, LiquidityPool, OrderBlock, FairValueGap
 
 @dataclass(slots=True)
 class MarketStructureState:
+    candles: list = field(default_factory=list)
+    candle_count: int = 0
+
     last_swing_high: SwingPoint | None = None
     last_swing_low: SwingPoint | None = None
 

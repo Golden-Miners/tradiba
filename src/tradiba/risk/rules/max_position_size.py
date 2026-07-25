@@ -1,7 +1,7 @@
-from tradiba.strategy.models import Signal
+from tradiba.strategy.models import TradingSignal
 
 from ..base import RiskRule
-from ..models.risk_result import RiskResult
+from ..models import TradePlan
 
 
 class MaximumPositionSizeRule(RiskRule):
@@ -14,13 +14,13 @@ class MaximumPositionSizeRule(RiskRule):
 
     def validate(
         self,
-        signal: Signal,
-    ) -> RiskResult:
+        signal: TradingSignal,
+    ) -> TradePlan:
 
         if signal.volume > self.maximum:
-            return RiskResult(
+            return TradePlan(
                 False,
                 "Maximum position exceeded",
             )
 
-        return RiskResult(True)
+        return TradePlan(True)

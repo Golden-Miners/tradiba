@@ -1,8 +1,8 @@
-from tradiba.strategy.models import Signal
+from tradiba.strategy.models import TradingSignal
 from tradiba.ports.execution import ExecutionProvider
 
 from ..base import RiskRule
-from ..models.risk_result import RiskResult
+from ..models import TradePlan
 
 
 class MaximumOpenTradesRule(RiskRule):
@@ -17,8 +17,8 @@ class MaximumOpenTradesRule(RiskRule):
 
     def validate(
         self,
-        signal: Signal,
-    ) -> RiskResult:
+        signal: TradingSignal,
+    ) -> TradePlan:
         
         # We assume ExecutionProvider has a positions() method
         try:
@@ -27,9 +27,9 @@ class MaximumOpenTradesRule(RiskRule):
             positions = []
             
         if len(positions) >= self.maximum:
-            return RiskResult(
+            return TradePlan(
                 False,
                 f"Maximum open trades exceeded ({len(positions)} >= {self.maximum})",
             )
 
-        return RiskResult(True)
+        return TradePlan(True)

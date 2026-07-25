@@ -1,0 +1,7 @@
+name: sma_crossover_strategy
+version: 1.0.0
+author: Tradiba
+api_version: 1.0
+type: strategy
+entrypoint: strategy:SmaCrossoverStrategy
+description: "A simple SMA crossover strategy plugin"

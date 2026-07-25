@@ -1,8 +1,8 @@
 from typing import List
-from tradiba.events import Event
+from tradiba.events import DomainEvent
 from tradiba.mt5.models import Candle
-from tradiba.market_structure.state import TimeframeState
-from tradiba.market_structure.models import SwingPoint, SwingKind
+from tradiba.market_structure.state import MarketStructureState
+from tradiba.market_structure.models import SwingPoint, SwingType
 from tradiba.market_structure.events import SwingHighEvent, SwingLowEvent
 from .base import Detector
 
@@ -12,7 +12,7 @@ class SwingDetector(Detector):
         self.right_bars = right_bars
         self.window_size = left_bars + right_bars + 1
 
-    def update(self, candle: Candle, state: TimeframeState, current_events: List[Event]) -> List[Event]:
+    def update(self, candle: Candle, state: MarketStructureState, current_events: List[DomainEvent]) -> List[DomainEvent]:
         events = []
         if len(state.candles) < self.window_size:
             return events
@@ -35,7 +35,7 @@ class SwingDetector(Detector):
                 index=state.candle_count - self.right_bars - 1,
                 timestamp=candidate.timestamp,
                 price=candidate.high,
-                kind=SwingKind.HIGH,
+                kind=SwingType.HIGH,
                 candle=candidate
             )
             state.last_swing_high = sp
@@ -57,7 +57,7 @@ class SwingDetector(Detector):
                 index=state.candle_count - self.right_bars - 1,
                 timestamp=candidate.timestamp,
                 price=candidate.low,
-                kind=SwingKind.LOW,
+                kind=SwingType.LOW,
                 candle=candidate
             )
             state.last_swing_low = sp

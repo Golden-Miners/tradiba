@@ -1,25 +1,25 @@
 from dataclasses import dataclass
-from tradiba.events.base import Event
+from tradiba.events.event import DomainEvent
 from .aggregate import Portfolio
 from .position import Position
 from .order import PendingOrder
 
 @dataclass(slots=True, frozen=True)
-class PortfolioUpdatedEvent(Event):
+class PortfolioUpdatedEvent(DomainEvent):
     portfolio: Portfolio
 
 @dataclass(slots=True, frozen=True)
-class PositionOpenedEvent(Event):
+class PositionOpenedEvent(DomainEvent):
     position: Position
 
 @dataclass(slots=True, frozen=True)
-class PositionClosedEvent(Event):
+class PositionClosedEvent(DomainEvent):
     position: Position
 
 @dataclass(slots=True, frozen=True)
-class OrderFilledEvent(Event):
+class OrderFilledEvent(DomainEvent):
     order: PendingOrder
 
 @dataclass(slots=True, frozen=True)
-class OrderCancelledEvent(Event):
+class OrderCancelledEvent(DomainEvent):
     order: PendingOrder

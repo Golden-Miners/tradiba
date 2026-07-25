@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from tradiba.strategy.models import Signal
-from .models.risk_result import RiskResult
+from tradiba.risk.models import TradePlan
 
 
 class RiskRule(ABC):
@@ -12,5 +11,5 @@ class RiskRule(ABC):
     def validate(
         self,
         signal: Signal,
-    ) -> RiskResult:
+    ) -> TradePlan:
         ...

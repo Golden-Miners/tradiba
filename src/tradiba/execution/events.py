@@ -1,19 +1,19 @@
 from dataclasses import dataclass
-from tradiba.events.base import Event
+from tradiba.events.event import DomainEvent
 from .models import ExecutionReport
 
 @dataclass(slots=True, frozen=True)
-class OrderSubmittedEvent(Event):
+class OrderSubmittedEvent(DomainEvent):
     report: ExecutionReport
 
 @dataclass(slots=True, frozen=True)
-class OrderFilledEvent(Event):
+class OrderFilledEvent(DomainEvent):
     report: ExecutionReport
 
 @dataclass(slots=True, frozen=True)
-class OrderRejectedEvent(Event):
+class OrderRejectedEvent(DomainEvent):
     report: ExecutionReport
 
 @dataclass(slots=True, frozen=True)
-class ExecutionFailedEvent(Event):
+class ExecutionFailedEvent(DomainEvent):
     report: ExecutionReport

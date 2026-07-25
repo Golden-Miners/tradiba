@@ -10,7 +10,7 @@ from __future__ import annotations
 import MetaTrader5 as mt5
 
 from tradiba.core.service import Service
-from tradiba.events import EventBus, Event
+from tradiba.events import EventBus, DomainEvent
 from tradiba.logging import get_logger
 from tradiba.scheduler import Scheduler, Task
 from dataclasses import dataclass
@@ -19,13 +19,13 @@ logger = get_logger(__name__)
 
 
 @dataclass(frozen=True, slots=True)
-class BrokerConnectedEvent(Event):
+class BrokerConnectedEvent(DomainEvent):
     """Published when the MT5 terminal connects successfully."""
     terminal_info: dict
 
 
 @dataclass(frozen=True, slots=True)
-class BrokerDisconnectedEvent(Event):
+class BrokerDisconnectedEvent(DomainEvent):
     """Published when the MT5 terminal disconnects."""
     reason: str
 

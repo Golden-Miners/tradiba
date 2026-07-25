@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import time, datetime
 from enum import Enum
-from tradiba.events import Event, EventBus
+from tradiba.events import DomainEvent, EventBus
 from tradiba.market.events import CandleClosedEvent
 
 class SessionName(Enum):
@@ -18,12 +18,12 @@ class TradingSession:
     end_utc: time
 
 @dataclass(frozen=True, slots=True)
-class SessionOpenedEvent(Event):
+class SessionOpenedEvent(DomainEvent):
     session: TradingSession
     timestamp: datetime
 
 @dataclass(frozen=True, slots=True)
-class SessionClosedEvent(Event):
+class SessionClosedEvent(DomainEvent):
     session: TradingSession
     timestamp: datetime
 

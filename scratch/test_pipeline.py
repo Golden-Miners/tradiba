@@ -3,10 +3,10 @@ from tradiba.mt5.service import MT5Service
 from tradiba.execution.adapters.mt5_execution import MT5ExecutionAdapter
 from tradiba.execution.service import ExecutionService
 from tradiba.strategy import Direction, Signal
-from tradiba.strategy.events import SignalGeneratedEvent
+from tradiba.strategy.events import TradingSignalCreatedEvent
 from tradiba.execution.events import OrderSubmittedEvent, OrderFilledEvent, OrderRejectedEvent
 from tradiba.risk.service import RiskService
-from tradiba.risk.events import RiskApprovedEvent, RiskRejectedEvent
+from tradiba.risk.events import TradeApprovedEvent, TradeRejectedEvent
 from tradiba.risk.rules.max_position_size import MaximumPositionSizeRule
 from tradiba.portfolio.service import PortfolioService
 from tradiba.portfolio.events import PortfolioUpdatedEvent
@@ -22,8 +22,8 @@ def test_pipeline():
     event_bus.subscribe(OrderSubmittedEvent, on_event)
     event_bus.subscribe(OrderFilledEvent, on_event)
     event_bus.subscribe(OrderRejectedEvent, on_event)
-    event_bus.subscribe(RiskApprovedEvent, on_event)
-    event_bus.subscribe(RiskRejectedEvent, on_event)
+    event_bus.subscribe(TradeApprovedEvent, on_event)
+    event_bus.subscribe(TradeRejectedEvent, on_event)
     event_bus.subscribe(PortfolioUpdatedEvent, on_event)
     
     mt5 = MT5Service()
@@ -59,7 +59,7 @@ def test_pipeline():
         strategy_id="test_risk",
         volume=10.0,
     )
-    event_bus.publish(SignalGeneratedEvent(signal=invalid_signal))
+    event_bus.publish(TradingSignalCreatedEvent(signal=invalid_signal))
     
     print("\n--- Test 2: Valid Signal (Volume = 0.01) ---")
     valid_signal = Signal(
@@ -72,7 +72,7 @@ def test_pipeline():
         strategy_id="test_risk",
         volume=0.01,
     )
-    event_bus.publish(SignalGeneratedEvent(signal=valid_signal))
+    event_bus.publish(TradingSignalCreatedEvent(signal=valid_signal))
     
     mt5.stop()
     print("Test finished.")

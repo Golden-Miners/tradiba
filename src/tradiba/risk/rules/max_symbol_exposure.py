@@ -1,8 +1,8 @@
-from tradiba.strategy.models import Signal
+from tradiba.strategy.models import TradingSignal
 from tradiba.ports.execution import ExecutionProvider
 
 from ..base import RiskRule
-from ..models.risk_result import RiskResult
+from ..models import TradePlan
 
 
 class MaximumSymbolExposureRule(RiskRule):
@@ -17,8 +17,8 @@ class MaximumSymbolExposureRule(RiskRule):
 
     def validate(
         self,
-        signal: Signal,
-    ) -> RiskResult:
+        signal: TradingSignal,
+    ) -> TradePlan:
         
         try:
             positions = self.provider.positions()
@@ -28,9 +28,9 @@ class MaximumSymbolExposureRule(RiskRule):
         symbol_positions = [p for p in positions if p.symbol == signal.symbol]
             
         if len(symbol_positions) >= self.maximum:
-            return RiskResult(
+            return TradePlan(
                 False,
                 f"Maximum symbol exposure exceeded for {signal.symbol} ({len(symbol_positions)} >= {self.maximum})",
             )
 
-        return RiskResult(True)
+        return TradePlan(True)

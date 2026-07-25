@@ -1,4 +1,3 @@
-import pytest
 from datetime import datetime, timezone
 from decimal import Decimal
 from tradiba.portfolio.account import AccountSnapshot

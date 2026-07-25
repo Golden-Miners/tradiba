@@ -1,7 +1,3 @@
-"""
-Production-ready in-process event bus.
-"""
-
 from __future__ import annotations
 
 from collections import defaultdict
@@ -9,11 +5,11 @@ from collections.abc import Callable
 
 from tradiba.logging import get_logger
 
-from .base import Event
+from tradiba.events.event import DomainEvent
 
 logger = get_logger(__name__)
 
-EventHandler = Callable[[Event], None]
+EventHandler = Callable[[DomainEvent], None]
 
 
 class EventBus:
@@ -28,7 +24,7 @@ class EventBus:
     """
 
     def __init__(self) -> None:
-        self._handlers: dict[type[Event], list[EventHandler]] = defaultdict(list)
+        self._handlers: dict[type[DomainEvent], list[EventHandler]] = defaultdict(list)
         self._published = 0
 
     @property
@@ -37,7 +33,7 @@ class EventBus:
 
     def subscribe(
         self,
-        event_type: type[Event],
+        event_type: type[DomainEvent],
         handler: EventHandler,
     ) -> None:
         if handler not in self._handlers[event_type]:
@@ -45,7 +41,7 @@ class EventBus:
 
     def unsubscribe(
         self,
-        event_type: type[Event],
+        event_type: type[DomainEvent],
         handler: EventHandler,
     ) -> None:
         handlers = self._handlers.get(event_type)
@@ -55,7 +51,7 @@ class EventBus:
 
     def publish(
         self,
-        event: Event,
+        event: DomainEvent,
     ) -> None:
 
         self._published += 1

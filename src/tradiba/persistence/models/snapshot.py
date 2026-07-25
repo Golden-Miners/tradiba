@@ -1,16 +1,11 @@
-from sqlalchemy import Float, Integer, DateTime
-from sqlalchemy.orm import Mapped, mapped_column
-from datetime import datetime
+from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy.sql import func
+from tradiba.persistence.models.base import Base
 
-from ..base import Base
-
-class SnapshotEntity(Base):
+class PortfolioSnapshotModel(Base):
     __tablename__ = "snapshots"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    equity: Mapped[float] = mapped_column(Float)
-    balance: Mapped[float] = mapped_column(Float)
-    margin: Mapped[float] = mapped_column(Float)
-    profit: Mapped[float] = mapped_column(Float)
-    free_margin: Mapped[float] = mapped_column(Float)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    version = Column(Integer, nullable=False, unique=True)
+    timestamp = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    uuid = Column(String, unique=True, nullable=False)

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from tradiba.execution.models.result import TradeResult
+from tradiba.execution.models import TradeResult
 
 
 class ExecutionProvider(ABC):

@@ -2,9 +2,6 @@ from datetime import datetime, timezone
 from tradiba.market.models import Candle, Timeframe
 from tradiba.market_structure.models import (
     Trend,
-    LiquidityPool,
-    LiquidityType,
-    LiquidityStatus,
     OrderBlock,
     OrderBlockDirection,
     OrderBlockStatus,
@@ -15,7 +12,7 @@ from tradiba.market_structure.models import (
 )
 from tradiba.market_structure.state import MarketStructureState
 from tradiba.market_structure.narrative_builder import NarrativeBuilder
-from tradiba.market_structure.narrative import MarketNarrative, MarketBias
+from tradiba.market_structure.narrative import MarketBias
 
 def test_bullish_trend_produces_bullish_bias():
     state = MarketStructureState()

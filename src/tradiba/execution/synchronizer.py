@@ -8,7 +8,7 @@ from tradiba.logging import get_logger
 from tradiba.ports.execution import ExecutionProvider
 from tradiba.scheduler import Scheduler, Task
 from tradiba.portfolio.events import PositionClosedEvent
-from tradiba.strategy.models import Direction
+from tradiba.strategy.models import SignalSide
 from tradiba.execution.models.position import Position
 
 logger = get_logger(__name__)
@@ -64,7 +64,7 @@ class ExecutionSynchronizer(Service):
                 self._event_bus.publish(PositionClosedEvent(
                     ticket=ticket,
                     symbol=closed_pos.symbol,
-                    side=Direction.LONG, # TODO: determine actual side
+                    side=SignalSide.LONG, # TODO: determine actual side
                     volume=closed_pos.volume,
                     entry=closed_pos.price_open,
                     exit=exit_price,

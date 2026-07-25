@@ -29,3 +29,20 @@ class Portfolio:
         from .order import PendingOrderStatus
         if ticket in self.pending_orders:
             self.pending_orders[ticket].status = PendingOrderStatus.FILLED
+
+    def apply(self, event):
+        handler = getattr(self, f"_apply_{event.__class__.__name__}", None)
+        if handler:
+            handler(event)
+
+    def _apply_PositionOpenedEvent(self, event):
+        self.open_position(event.position)
+
+    def _apply_PositionClosedEvent(self, event):
+        self.close_position(event.position.ticket)
+
+    def _apply_OrderFilledEvent(self, event):
+        self.fill_order(event.order.ticket)
+
+    def _apply_OrderCancelledEvent(self, event):
+        self.cancel_order(event.order.ticket)
