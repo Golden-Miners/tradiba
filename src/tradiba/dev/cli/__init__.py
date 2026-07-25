@@ -1,0 +1,3 @@
+"""
+Tradiba CLI package.
+"""
