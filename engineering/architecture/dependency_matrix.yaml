@@ -147,6 +147,21 @@ domains:
       - tradiba.analytics
       - tradiba.logging
       
+  - name: decision
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.portfolio
+      - tradiba.execution
+      - tradiba.risk
+      - tradiba.strategy
+      - tradiba.models
+      - tradiba.analytics
+      - tradiba.logging
+      - tradiba.autonomous_research
+      - tradiba.agents
+      - tradiba.digital_twin
+      
   - name: backtesting
     allowed_dependencies:
       - tradiba.shared
