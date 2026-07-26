@@ -4,6 +4,7 @@
 domains:
   - name: trading
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.core
@@ -13,6 +14,7 @@ domains:
   
   - name: research
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.core
@@ -22,6 +24,7 @@ domains:
       
   - name: analytics
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.research # e.g. for consuming events definitions
       - tradiba.events
@@ -32,6 +35,7 @@ domains:
 
   - name: aiops
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.core
@@ -41,6 +45,7 @@ domains:
       
   - name: workflows
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.core
@@ -50,6 +55,7 @@ domains:
 
   - name: control_plane
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.core
@@ -62,6 +68,7 @@ domains:
 
   - name: strategies
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.core
@@ -69,14 +76,17 @@ domains:
       
   - name: indicators
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       
   - name: regimes
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       
   - name: execution
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.risk
@@ -91,10 +101,12 @@ domains:
       
   - name: dashboards
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       
   - name: intelligence
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.models
@@ -106,10 +118,12 @@ domains:
       
   - name: marketplace
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       
   - name: agents
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.intelligence
@@ -124,6 +138,7 @@ domains:
       
   - name: autonomous_research
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.intelligence
@@ -137,6 +152,7 @@ domains:
       
   - name: digital_twin
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.portfolio
@@ -149,6 +165,7 @@ domains:
       
   - name: decision
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       - tradiba.events
       - tradiba.portfolio
@@ -161,11 +178,20 @@ domains:
       - tradiba.autonomous_research
       - tradiba.agents
       - tradiba.digital_twin
+      - tradiba.tenancy
+
+  - name: tenancy
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.logging
       
   - name: backtesting
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
       
   - name: reports
     allowed_dependencies:
+      - tradiba.tenancy
       - tradiba.shared
