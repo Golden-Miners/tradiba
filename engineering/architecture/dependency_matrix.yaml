@@ -1,0 +1,61 @@
+# Tradiba Dependency Matrix
+# Defines allowed dependencies (imports) between bounded contexts
+
+domains:
+  - name: trading
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.core
+      - tradiba.models
+      - tradiba.persistence
+      - tradiba.infrastructure
+  
+  - name: research
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.core
+      - tradiba.models
+      - tradiba.persistence
+      - tradiba.infrastructure
+      
+  - name: analytics
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.research # e.g. for consuming events definitions
+      - tradiba.events
+      - tradiba.core
+      - tradiba.models
+      - tradiba.persistence
+      - tradiba.infrastructure
+
+  - name: aiops
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.core
+      - tradiba.models
+      - tradiba.persistence
+      - tradiba.infrastructure
+      
+  - name: workflows
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.core
+      - tradiba.models
+      - tradiba.persistence
+      - tradiba.infrastructure
+
+  - name: control_plane
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.core
+      - tradiba.models
+      - tradiba.persistence
+      - tradiba.infrastructure
+
+  - name: shared
+    allowed_dependencies: [] # Shared kernel cannot depend on any domain
