@@ -122,6 +122,19 @@ domains:
       - tradiba.analytics
       - tradiba.logging
       
+  - name: autonomous_research
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.intelligence
+      - tradiba.agents
+      - tradiba.research
+      - tradiba.portfolio
+      - tradiba.strategy
+      - tradiba.models
+      - tradiba.analytics
+      - tradiba.logging
+      
   - name: backtesting
     allowed_dependencies:
       - tradiba.shared
