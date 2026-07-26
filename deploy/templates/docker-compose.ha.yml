@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  tradiba-api:
+    image: tradiba/api:v2.1
+    ports:
+      - "8000:8000"
+    environment:
+      - TRADIBA_ENV=production
+      - DB_HOST=tradiba-db
+      - REDIS_HOST=tradiba-redis
+    depends_on:
+      - tradiba-db
+      - tradiba-redis
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+
+  tradiba-execution-engine:
+    image: tradiba/execution:v2.1
+    environment:
+      - TRADIBA_ENV=production
+      - DB_HOST=tradiba-db
+      - REDIS_HOST=tradiba-redis
+      - BROKER_API_KEY=${BROKER_API_KEY}
+    depends_on:
+      - tradiba-redis
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: always
+
+  tradiba-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: tradiba
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: tradiba_prod
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      
+  tradiba-redis:
+    image: redis:7-alpine
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:

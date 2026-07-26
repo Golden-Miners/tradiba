@@ -1,4 +1,4 @@
-from fastapi import Depends, Request
+from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from tradiba.api.exceptions import APIError
 from .jwt import decode_access_token

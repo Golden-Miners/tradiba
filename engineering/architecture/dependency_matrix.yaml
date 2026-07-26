@@ -59,3 +59,59 @@ domains:
 
   - name: shared
     allowed_dependencies: [] # Shared kernel cannot depend on any domain
+
+  - name: strategies
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.core
+      - tradiba.models
+      
+  - name: indicators
+    allowed_dependencies:
+      - tradiba.shared
+      
+  - name: regimes
+    allowed_dependencies:
+      - tradiba.shared
+      
+  - name: execution
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.risk
+      - tradiba.portfolio
+      - tradiba.core
+      - tradiba.models
+      - tradiba.logging
+      - tradiba.ports
+      - tradiba.scheduler
+      - tradiba.strategy
+      - tradiba.intelligence
+      
+  - name: dashboards
+    allowed_dependencies:
+      - tradiba.shared
+      
+  - name: intelligence
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.models
+      - tradiba.strategy
+      - tradiba.analytics
+      - tradiba.regimes
+      - tradiba.portfolio
+      - tradiba.risk
+      
+  - name: marketplace
+    allowed_dependencies:
+      - tradiba.shared
+      
+  - name: backtesting
+    allowed_dependencies:
+      - tradiba.shared
+      
+  - name: reports
+    allowed_dependencies:
+      - tradiba.shared

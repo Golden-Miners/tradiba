@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from tradiba.api.schemas import StrategyResponse
 from tradiba.api.dependencies import get_strategy_engine

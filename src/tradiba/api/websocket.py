@@ -1,7 +1,7 @@
 import json
 import asyncio
-from typing import List, Dict, Any
-from fastapi import WebSocket, WebSocketDisconnect
+from typing import List
+from fastapi import WebSocket
 from tradiba.events import EventBus, DomainEvent
 
 

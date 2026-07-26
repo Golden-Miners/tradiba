@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 
 from tradiba.api.schemas import BacktestJobResponse, BacktestRequest
-from tradiba.api.jobs import job_manager, JobStatus
+from tradiba.api.jobs import job_manager
 from tradiba.api.auth.permissions import requires_role
 
 router = APIRouter(prefix="/backtests", tags=["backtests"])
