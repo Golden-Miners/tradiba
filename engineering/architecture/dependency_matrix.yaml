@@ -209,6 +209,21 @@ domains:
       - tradiba.events
       - tradiba.logging
       - tradiba.tenancy
+
+  - name: frontend_api
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.logging
+      - tradiba.tenancy
+      - tradiba.evolution
+      - tradiba.portfolio
+      - tradiba.execution
+      - tradiba.strategy
+      - tradiba.intelligence
+      - tradiba.risk
+      - tradiba.models
+
       
   - name: backtesting
     allowed_dependencies:
