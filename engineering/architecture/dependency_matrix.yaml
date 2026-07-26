@@ -135,6 +135,18 @@ domains:
       - tradiba.analytics
       - tradiba.logging
       
+  - name: digital_twin
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.portfolio
+      - tradiba.execution
+      - tradiba.risk
+      - tradiba.strategy
+      - tradiba.models
+      - tradiba.analytics
+      - tradiba.logging
+      
   - name: backtesting
     allowed_dependencies:
       - tradiba.shared
