@@ -108,6 +108,20 @@ domains:
     allowed_dependencies:
       - tradiba.shared
       
+  - name: agents
+    allowed_dependencies:
+      - tradiba.shared
+      - tradiba.events
+      - tradiba.intelligence
+      - tradiba.risk
+      - tradiba.portfolio
+      - tradiba.execution
+      - tradiba.strategy
+      - tradiba.regimes
+      - tradiba.models
+      - tradiba.analytics
+      - tradiba.logging
+      
   - name: backtesting
     allowed_dependencies:
       - tradiba.shared
