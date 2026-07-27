@@ -58,3 +58,38 @@ class HermesKnowledgeExpandedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("HermesKnowledgeExpanded", timestamp, payload)
 
+# V4.3 Self-Improvement Events
+@dataclass
+class HermesOptimizationStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesOptimizationStarted", timestamp, payload)
+
+@dataclass
+class HermesCandidateCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesCandidateCreated", timestamp, payload)
+
+@dataclass
+class HermesValidationPassedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesValidationPassed", timestamp, payload)
+
+@dataclass
+class HermesValidationFailedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesValidationFailed", timestamp, payload)
+
+@dataclass
+class HermesPaperTradingStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesPaperTradingStarted", timestamp, payload)
+
+@dataclass
+class HermesPromotionRequestedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesPromotionRequested", timestamp, payload)
+
+@dataclass
+class HermesRollbackCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesRollbackCompleted", timestamp, payload)

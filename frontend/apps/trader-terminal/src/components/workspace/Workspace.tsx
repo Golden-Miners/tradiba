@@ -23,7 +23,7 @@ export const Workspace: React.FC = () => {
       {/* Main Center Area */}
       <main className="workspace-main">
         <section className="main-chart-area glass-panel">
-          <Chart symbol="EURUSD" />
+          <Chart symbol="XAUUSD" />
         </section>
         <section className="main-signals-area glass-panel">
           <SignalPanel />

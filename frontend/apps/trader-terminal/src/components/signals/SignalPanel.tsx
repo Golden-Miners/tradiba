@@ -3,7 +3,7 @@ import './SignalPanel.css';
 
 export const SignalPanel: React.FC = () => {
   const signals = [
-    { id: 1, type: 'BUY', symbol: 'EURUSD', strategy: 'Silver Bullet', time: '10:00 AM', confidence: '92%' },
+    { id: 1, type: 'BUY', symbol: 'XAUUSD', strategy: 'Silver Bullet', time: '10:00 AM', confidence: '92%' },
     { id: 2, type: 'SELL', symbol: 'GBPUSD', strategy: 'Judas Swing', time: '09:45 AM', confidence: '85%' },
     { id: 3, type: 'BUY', symbol: 'XAUUSD', strategy: 'Macro Sync', time: '08:30 AM', confidence: '78%' },
   ];

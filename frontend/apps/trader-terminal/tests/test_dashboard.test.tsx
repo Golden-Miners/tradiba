@@ -11,7 +11,7 @@ describe('MarketScanner Component', () => {
     expect(screen.getByText('Market Scanner')).toBeDefined();
     
     // Check if it renders the scanner assets
-    expect(screen.getByText('EURUSD')).toBeDefined();
+    expect(screen.getByText('XAUUSD')).toBeDefined();
     expect(screen.getByText('BTCUSD')).toBeDefined();
   });
 });

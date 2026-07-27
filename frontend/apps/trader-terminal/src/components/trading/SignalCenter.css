@@ -116,3 +116,39 @@
 
 .status.active { color: var(--status-up); }
 .status.waiting { color: var(--status-warning); }
+
+.signal-levels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 8px;
+  background: var(--bg-primary);
+  border-radius: 4px;
+}
+
+.level-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+}
+
+.level-label {
+  color: var(--text-tertiary);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.level-value {
+  color: var(--text-primary);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.level-item.sl .level-value {
+  color: var(--status-down);
+}
+
+.level-item.tp .level-value {
+  color: var(--status-up);
+}

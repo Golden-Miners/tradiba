@@ -4,9 +4,9 @@ import './SignalCenter.css';
 
 export const SignalCenter: React.FC = () => {
   const signals = [
-    { id: 1, symbol: 'EURUSD', action: 'BUY', confidence: 92, status: 'Active', time: '2m ago' },
-    { id: 2, symbol: 'BTCUSD', action: 'SELL', confidence: 85, status: 'Waiting', time: '5m ago' },
-    { id: 3, symbol: 'AAPL', action: 'BUY', confidence: 78, status: 'Active', time: '12m ago' },
+    { id: 1, symbol: 'XAUUSD', action: 'BUY', confidence: 92, status: 'Active', time: '2m ago', entry: '2350.50', sl: '2345.00', tp: '2360.00' },
+    { id: 2, symbol: 'BTCUSD', action: 'SELL', confidence: 85, status: 'Waiting', time: '5m ago', entry: '64200', sl: '65000', tp: '62000' },
+    { id: 3, symbol: 'AAPL', action: 'BUY', confidence: 78, status: 'Active', time: '12m ago', entry: '175.20', sl: '172.00', tp: '180.00' },
   ];
 
   return (
@@ -31,6 +31,20 @@ export const SignalCenter: React.FC = () => {
                   <div className="progress" style={{ width: `${sig.confidence}%` }}></div>
                 </div>
                 <span>{sig.confidence}%</span>
+              </div>
+            </div>
+            <div className="signal-levels">
+              <div className="level-item">
+                <span className="level-label">Entry</span>
+                <span className="level-value">{sig.entry}</span>
+              </div>
+              <div className="level-item sl">
+                <span className="level-label">SL</span>
+                <span className="level-value">{sig.sl}</span>
+              </div>
+              <div className="level-item tp">
+                <span className="level-label">TP</span>
+                <span className="level-value">{sig.tp}</span>
               </div>
             </div>
             <div className="signal-footer">

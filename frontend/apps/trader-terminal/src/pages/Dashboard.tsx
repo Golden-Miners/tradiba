@@ -11,7 +11,7 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="dashboard-grid">
       <div className="grid-area-chart">
-        <Chart symbol="EURUSD" />
+        <Chart symbol="XAUUSD" />
       </div>
       <div className="grid-area-scanner">
         <MarketScanner />

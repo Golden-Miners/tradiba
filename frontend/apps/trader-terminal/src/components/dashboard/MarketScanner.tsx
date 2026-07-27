@@ -4,7 +4,7 @@ import './MarketScanner.css';
 
 export const MarketScanner: React.FC = () => {
   const assets = [
-    { symbol: 'EURUSD', type: 'Forex', pattern: 'CHOCH', volatility: 'High', aiScore: 94 },
+    { symbol: 'XAUUSD', type: 'Forex', pattern: 'CHOCH', volatility: 'High', aiScore: 94 },
     { symbol: 'BTCUSD', type: 'Crypto', pattern: 'FVG', volatility: 'High', aiScore: 88 },
     { symbol: 'US30', type: 'Indices', pattern: 'Liquidity Sweep', volatility: 'Medium', aiScore: 72 },
     { symbol: 'XAUUSD', type: 'Metals', pattern: 'Order Block', volatility: 'Low', aiScore: 65 },

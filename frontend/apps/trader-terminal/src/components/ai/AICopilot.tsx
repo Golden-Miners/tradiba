@@ -14,7 +14,7 @@ export const AICopilot: React.FC = () => {
         <div className="chat-message ai">
           <div className="avatar"><Bot size={16} /></div>
           <div className="message-bubble">
-            <p>I detected a <strong>BOS</strong> (Break of Structure) on EURUSD 5m. The current Order Block suggests strong support at 1.0850. Would you like me to explain the setup or calculate risk for a long entry?</p>
+            <p>I detected a <strong>BOS</strong> (Break of Structure) on XAUUSD 5m. The current Order Block suggests strong support at 1.0850. Would you like me to explain the setup or calculate risk for a long entry?</p>
             <div className="evidence-link">
               <Activity size={12} /> View Decision Intelligence Evidence
             </div>

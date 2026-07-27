@@ -4,7 +4,7 @@ import './AlertCenter.css';
 export const AlertCenter: React.FC = () => {
   const alerts = [
     { id: 1, type: 'critical', message: 'NFP Data Release in 5m', time: 'Just now' },
-    { id: 2, type: 'info', message: 'EURUSD reached target +1R', time: '12m ago' },
+    { id: 2, type: 'info', message: 'XAUUSD reached target +1R', time: '12m ago' },
     { id: 3, type: 'warning', message: 'Spread widening on XAUUSD', time: '45m ago' },
   ];
 

@@ -53,7 +53,7 @@ export const AppLayout: React.FC = () => {
       <main className="main-content">
         <header className="topbar glass-panel">
           <div className="topbar-search">
-            <input type="text" placeholder="Search symbol (e.g., EURUSD)..." />
+            <input type="text" placeholder="Search symbol (e.g., XAUUSD)..." />
           </div>
           <div className="topbar-actions">
             <button className="icon-btn">

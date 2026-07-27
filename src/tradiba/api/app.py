@@ -17,7 +17,8 @@ from tradiba.api.routers import (
     narrative,
     backtest,
     optimization,
-    operations
+    operations,
+    market
 )
 from tradiba.api.auth import routes as auth_routes
 from tradiba.api.exceptions import APIError, api_error_handler, global_exception_handler
@@ -66,6 +67,7 @@ def create_app() -> FastAPI:
     app.include_router(backtest.router)
     app.include_router(optimization.router)
     app.include_router(operations.router)
+    app.include_router(market.router)
 
     @app.websocket("/ws")
     async def websocket_endpoint(websocket: WebSocket):

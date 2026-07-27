@@ -9,7 +9,7 @@ export const OrderTicket: React.FC = () => {
       <div className="order-form">
         <div className="form-group">
           <label>Symbol</label>
-          <input type="text" value="EURUSD" readOnly className="input-field symbol-input" />
+          <input type="text" value="XAUUSD" readOnly className="input-field symbol-input" />
         </div>
         
         <div className="form-group">
