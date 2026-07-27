@@ -279,6 +279,48 @@ class KnowledgePromotedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("KnowledgePromoted", timestamp, payload)
 
+# V5.4 Cognitive Operating System Events
+@dataclass
+class CognitiveSessionStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CognitiveSessionStarted", timestamp, payload)
+
+@dataclass
+class CognitivePlanCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CognitivePlanCreated", timestamp, payload)
+
+@dataclass
+class SkillExecutionStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillExecutionStarted", timestamp, payload)
+
+@dataclass
+class SkillExecutionCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillExecutionCompleted", timestamp, payload)
+
+@dataclass
+class ContextUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ContextUpdated", timestamp, payload)
+
+@dataclass
+class MemorySynchronizedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MemorySynchronized", timestamp, payload)
+
+@dataclass
+class SchedulerPreemptedTaskEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SchedulerPreemptedTask", timestamp, payload)
+
+@dataclass
+class KernelRecoveredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("KernelRecovered", timestamp, payload)
+
+
 
 
 
