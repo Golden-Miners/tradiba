@@ -320,6 +320,43 @@ class KernelRecoveredEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("KernelRecovered", timestamp, payload)
 
+# V5.5 Meta-Cognition & Autonomous Optimization Events
+@dataclass
+class MetaEvaluationCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MetaEvaluationCompleted", timestamp, payload)
+
+@dataclass
+class ReasoningQualityMeasuredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ReasoningQualityMeasured", timestamp, payload)
+
+@dataclass
+class WorkflowOptimizedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("WorkflowOptimized", timestamp, payload)
+
+@dataclass
+class PlanningTemplateUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PlanningTemplateUpdated", timestamp, payload)
+
+@dataclass
+class MemoryOptimizedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MemoryOptimized", timestamp, payload)
+
+@dataclass
+class ToolRankingUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ToolRankingUpdated", timestamp, payload)
+
+@dataclass
+class SelfDiagnosisCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SelfDiagnosisCompleted", timestamp, payload)
+
+
 
 
 
