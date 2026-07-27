@@ -589,6 +589,48 @@ class OperationalForecastCompletedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("OperationalForecastCompleted", timestamp, payload)
 
+# V7.0 HGCP Events
+@dataclass
+class CognitivePlatformStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CognitivePlatformStarted", timestamp, payload)
+
+@dataclass
+class CapabilityRegisteredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CapabilityRegistered", timestamp, payload)
+
+@dataclass
+class MemoryFabricUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MemoryFabricUpdated", timestamp, payload)
+
+@dataclass
+class WorldModelSynchronizedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("WorldModelSynchronized", timestamp, payload)
+
+@dataclass
+class CrossAgentPlanCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CrossAgentPlanCreated", timestamp, payload)
+
+@dataclass
+class SkillInstalledEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillInstalled", timestamp, payload)
+
+@dataclass
+class GovernancePolicyAppliedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("GovernancePolicyApplied", timestamp, payload)
+
+@dataclass
+class DigitalTwinValidatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DigitalTwinValidated", timestamp, payload)
+
+
 
 
 
