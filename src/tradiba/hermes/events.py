@@ -558,6 +558,38 @@ class EngineeringKnowledgeUpdatedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("EngineeringKnowledgeUpdated", timestamp, payload)
 
+# V6.4 Enterprise Events
+@dataclass
+class StrategicObjectiveCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("StrategicObjectiveCreated", timestamp, payload)
+
+@dataclass
+class OKRUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("OKRUpdated", timestamp, payload)
+
+@dataclass
+class CapacityForecastGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CapacityForecastGenerated", timestamp, payload)
+
+@dataclass
+class EnterpriseDecisionCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("EnterpriseDecisionCreated", timestamp, payload)
+
+@dataclass
+class ExecutiveDashboardUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ExecutiveDashboardUpdated", timestamp, payload)
+
+@dataclass
+class OperationalForecastCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("OperationalForecastCompleted", timestamp, payload)
+
+
 
 
 
