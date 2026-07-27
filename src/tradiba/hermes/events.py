@@ -124,3 +124,45 @@ class HermesPortfolioLearningCompletedEvent(HermesEvent):
 class HermesPromotionAssessmentEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("HermesPromotionAssessment", timestamp, payload)
+
+# V5.0 Live Trading Events
+@dataclass
+class HermesTradeProposedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesTradeProposed", timestamp, payload)
+
+@dataclass
+class HermesTradeApprovedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesTradeApproved", timestamp, payload)
+
+@dataclass
+class HermesTradeExecutedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesTradeExecuted", timestamp, payload)
+
+@dataclass
+class HermesPolicyViolationEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesPolicyViolation", timestamp, payload)
+
+@dataclass
+class HermesSafetyTriggeredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesSafetyTriggered", timestamp, payload)
+
+@dataclass
+class HermesOverrideEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesOverride", timestamp, payload)
+
+@dataclass
+class HermesKillSwitchActivatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesKillSwitchActivated", timestamp, payload)
+
+@dataclass
+class HermesLearningFeedbackEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesLearningFeedback", timestamp, payload)
+
