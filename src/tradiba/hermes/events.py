@@ -166,3 +166,45 @@ class HermesLearningFeedbackEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("HermesLearningFeedback", timestamp, payload)
 
+# V5.1 Collective Intelligence Events
+@dataclass
+class AgentRegisteredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AgentRegistered", timestamp, payload)
+
+@dataclass
+class TaskAssignedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("TaskAssigned", timestamp, payload)
+
+@dataclass
+class ConsensusStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ConsensusStarted", timestamp, payload)
+
+@dataclass
+class ConsensusCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ConsensusCompleted", timestamp, payload)
+
+@dataclass
+class CollectiveRecommendationCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CollectiveRecommendationCreated", timestamp, payload)
+
+@dataclass
+class AgentHealthChangedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AgentHealthChanged", timestamp, payload)
+
+@dataclass
+class SupervisorEscalationEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SupervisorEscalation", timestamp, payload)
+
+@dataclass
+class CollectiveLearningUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CollectiveLearningUpdated", timestamp, payload)
+
+

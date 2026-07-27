@@ -1,23 +1,34 @@
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from tradiba.hermes.models.ollama import OllamaClient
 from tradiba.hermes.core.goals import HermesGoal, GoalManager, GoalStatus
-from tradiba.hermes.core.planner import Planner
-from tradiba.hermes.core.reflector import Reflector
+
+# Import collective infrastructure
+from tradiba.hermes.collective.runtime.environment import AgentRuntime
+from tradiba.hermes.collective.supervisor.agent import SupervisorAgent
 
 class HermesAgent:
-    """Core entry point for the Hermes Cognitive Layer."""
-    def __init__(self, agent_id: str = "hermes-1"):
+    """
+    Core entry point for the Hermes Cognitive Layer.
+    Refactored in v5.1 to use the Collective Intelligence Platform where the SupervisorAgent takes over entirely.
+    """
+    def __init__(self, agent_id: str = "hermes-supervisor"):
         self.id = agent_id
         self.state = "idle"
-        self.llm = OllamaClient(model="qwen:8b") # Configured per user request
-        
+        self.llm = OllamaClient(model="qwen:8b")
         self.goals = GoalManager()
-        self.planner = Planner(self.llm)
-        self.reflector = Reflector(self.llm)
         
+        # Initialize Collective Runtime
+        self.runtime = AgentRuntime()
+        self.supervisor = SupervisorAgent(
+            agent_id=self.id,
+            blackboard=self.runtime.blackboard,
+            bus=self.runtime.bus,
+            registry=self.runtime.registry
+        )
         self.current_goal: Optional[HermesGoal] = None
-        self.active_plan: List[str] = []
-        self.available_tools: List[str] = ["portfolio_query", "research_query"]
+
+    async def start(self):
+        await self.runtime.register_and_start_agent(self.supervisor)
 
     async def accept_goal(self, goal: HermesGoal):
         self.state = "planning"
@@ -25,14 +36,16 @@ class HermesAgent:
         self.goals.add_goal(goal)
         self.goals.update_status(goal.id, GoalStatus.IN_PROGRESS)
         
-        self.active_plan = await self.planner.generate_plan(goal)
+        # Post goal to blackboard for the collective
+        await self.runtime.blackboard.add_active_goal({"id": goal.id, "description": goal.description})
         self.state = "executing"
-        # In a real system, the executor loop would take over here.
         
     async def finish_goal(self, outcome: str):
         if self.current_goal:
-            reflection = await self.reflector.reflect(self.current_goal.description, outcome)
             self.goals.update_status(self.current_goal.id, GoalStatus.COMPLETED)
             self.state = "idle"
-            return reflection
+            return f"Collective completed goal: {outcome}"
         return ""
+
+    async def stop(self):
+        await self.runtime.stop_all()
