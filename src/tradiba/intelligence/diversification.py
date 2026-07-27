@@ -1,5 +1,4 @@
 from typing import Dict, List, Tuple
-from tradiba.intelligence.scoring import StrategyScorecard
 
 class CorrelationIntelligence:
     """

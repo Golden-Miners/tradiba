@@ -1,4 +1,4 @@
-from typing import Dict, List, Set, Tuple
+from typing import List, Set, Tuple
 
 class KnowledgeGraph:
     """Lightweight in-memory representation of domain relationships."""

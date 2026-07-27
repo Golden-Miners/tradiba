@@ -6,7 +6,7 @@ from tradiba.persistence.database import SessionFactory
 from tradiba.ports.market_data import MarketDataProvider
 from tradiba.execution.adapters.mt5_execution import MT5ExecutionAdapter
 from tradiba.market.adapters.mt5_market import MT5MarketDataAdapter
-from tradiba.mt5.connection import MT5ConnectionManager
+from tradiba.integrations.brokers.mt5.connection import MT5ConnectionManager
 from tradiba.market.service import MarketDataService
 from tradiba.market_structure.service import MarketStructureService
 
@@ -51,7 +51,7 @@ def bootstrap() -> Application:
     # Core Services
     execution_sync = ExecutionSynchronizer(event_bus, mt5_execution, scheduler)
     from tradiba.persistence.repositories.portfolio import SqlAlchemyPortfolioRepository
-    from tradiba.mt5.portfolio import MT5PortfolioSynchronizer
+    from tradiba.integrations.brokers.mt5.portfolio import MT5PortfolioSynchronizer
 
     # Session is created but realistically this should be scoped per unit of work
     session = SessionFactory()
@@ -127,27 +127,27 @@ def bootstrap() -> Application:
 #     container.register_singleton(NarrativeEngine, narrative_engine)
 #     container.register_singleton(StrategyEngine, strategy_engine)
 # 
-#     # Attach to Lifecycle
-#     app.lifecycle.add(mt5_connection)
-#     app.lifecycle.add(execution_sync)
-#     # app.lifecycle.add(portfolio_service) # PortfolioService is now event driven, doesn't need start/stop
-#     app.lifecycle.add(execution_service)
-#     app.lifecycle.add(risk_service)
-#     app.lifecycle.add(market_data)
-#     # app.lifecycle.add(market_structure) # Removed start/stop
-#     # app.lifecycle.add(confluence_engine)
-#     # app.lifecycle.add(bias_service)
-#     # app.lifecycle.add(session_engine)
-#     # app.lifecycle.add(narrative_engine)
-#     # app.lifecycle.add(strategy_engine)
-#     
-#     app.event_bus = event_bus
-#     app.scheduler = scheduler
-#     
-#     from tradiba.api.service import APIService
-#     api_service = APIService(settings.api, container)
-#     app.lifecycle.add(api_service)
-# 
-#     logger.info("Application bootstrap complete.")
+    # Attach to Lifecycle
+    app.lifecycle.add(mt5_connection)
+    app.lifecycle.add(execution_sync)
+    # app.lifecycle.add(portfolio_service) # PortfolioService is now event driven, doesn't need start/stop
+    # app.lifecycle.add(execution_service)
+    app.lifecycle.add(risk_service)
+    app.lifecycle.add(market_data)
+    # app.lifecycle.add(market_structure) # Removed start/stop
+    # app.lifecycle.add(confluence_engine)
+    # app.lifecycle.add(bias_service)
+    # app.lifecycle.add(session_engine)
+    # app.lifecycle.add(narrative_engine)
+    # app.lifecycle.add(strategy_engine)
+    
+    app.event_bus = event_bus
+    app.scheduler = scheduler
+    
+    from tradiba.api.service import APIService
+    api_service = APIService(settings.api, container)
+    app.lifecycle.add(api_service)
+
+    logger.info("Application bootstrap complete.")
     return app
 # 

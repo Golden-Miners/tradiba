@@ -1,0 +1,72 @@
+.workspace-container {
+  display: grid;
+  grid-template-columns: 260px 1fr 320px;
+  grid-template-rows: 100vh;
+  gap: 16px;
+  padding: 16px;
+  background-color: var(--bg-base);
+}
+
+/* Sidebar */
+.workspace-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: calc(100vh - 32px);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
+.brand-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.brand-version {
+  font-size: 0.75rem;
+  color: var(--accent-purple);
+  font-weight: 600;
+  padding: 2px 6px;
+  background: rgba(157, 78, 221, 0.15);
+  border-radius: var(--border-radius-sm);
+}
+
+/* Main Area */
+.workspace-main {
+  display: grid;
+  grid-template-rows: 65% 1fr;
+  gap: 16px;
+  height: calc(100vh - 32px);
+}
+
+.main-chart-area, .main-signals-area {
+  padding: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Right Panel */
+.workspace-right-panel {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 16px;
+  height: calc(100vh - 32px);
+}
+
+.portfolio-area, .order-area, .ai-insight-area {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-insight-area {
+  overflow-y: auto;
+}

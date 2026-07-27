@@ -2,10 +2,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from tradiba.api.app import app
-from tradiba.events import EventBus
-from tradiba.portfolio.service import PortfolioService
 from tradiba.portfolio.models import Portfolio
-from decimal import Decimal
 from unittest.mock import MagicMock
 
 client = TestClient(app)

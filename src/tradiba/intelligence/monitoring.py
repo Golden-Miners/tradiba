@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import List, Dict
 from tradiba.intelligence.models.strategy_descriptor import StrategyDescriptor
 
 class ContinuousMonitor:

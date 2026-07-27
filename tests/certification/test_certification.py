@@ -1,4 +1,3 @@
-import pytest
 
 def test_functional_certification():
     """Verify that all functional paths in the core execution flow are operational."""

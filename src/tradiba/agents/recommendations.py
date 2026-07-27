@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import List
 
 @dataclass(frozen=True)
 class Recommendation:

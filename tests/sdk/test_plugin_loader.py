@@ -1,12 +1,9 @@
 import pytest
-import os
-from unittest.mock import Mock, patch
 
 from tradiba.sdk.metadata import PluginManifest
 from tradiba.sdk.registry import PluginRegistry
 from tradiba.sdk.validator import PluginValidator
-from tradiba.sdk.loader import PluginLoader
-from tradiba.sdk.exceptions import IncompatibleApiVersionError, PluginValidationError, PluginLoadError
+from tradiba.sdk.exceptions import IncompatibleApiVersionError, PluginValidationError
 from tradiba.sdk.plugin import Plugin
 
 class DummyPlugin(Plugin):

@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import Dict
 from tradiba.agents.base.agent import Agent
 from tradiba.agents.base.context import AgentContext
 from tradiba.agents.recommendations import Recommendation

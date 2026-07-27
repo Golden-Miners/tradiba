@@ -1,0 +1,85 @@
+.order-ticket-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.input-field {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: var(--border-radius-sm);
+  font-family: inherit;
+  font-size: 0.875rem;
+}
+
+.symbol-input {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.risk-slider {
+  width: 100%;
+  accent-color: var(--accent-blue);
+}
+
+.risk-value {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+.order-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.order-actions button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: var(--border-radius-sm);
+  color: white;
+  gap: 4px;
+}
+
+.order-actions button span:first-child {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.action-price {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.btn-buy { background: var(--trade-buy); }
+.btn-buy:hover { box-shadow: 0 0 16px var(--trade-buy-bg); filter: brightness(1.1); }
+
+.btn-sell { background: var(--trade-sell); }
+.btn-sell:hover { box-shadow: 0 0 16px var(--trade-sell-bg); filter: brightness(1.1); }

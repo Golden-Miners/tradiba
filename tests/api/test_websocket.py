@@ -1,9 +1,6 @@
-import pytest
 from fastapi.testclient import TestClient
 
 from tradiba.api.app import app
-from tradiba.api.websocket import ws_manager, setup_websockets
-from unittest.mock import MagicMock
 
 from tradiba.events import EventBus
 from tradiba.api.websocket import WebSocketManager

@@ -1,4 +1,3 @@
-from typing import List
 from tradiba.agents.base.agent import Agent
 from tradiba.agents.base.context import AgentContext
 from tradiba.agents.base.result import AgentResult

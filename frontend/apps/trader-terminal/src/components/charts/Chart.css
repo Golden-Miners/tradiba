@@ -1,0 +1,91 @@
+.chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 16px;
+}
+
+.chart-header {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 12px;
+}
+
+.chart-symbol-info {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.chart-symbol-info h2 {
+  font-size: 1.5rem;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.chart-timeframe {
+  background: var(--border-focus);
+  padding: 2px 6px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.chart-price-info {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.current-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.price-change {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Canvas Area */
+.chart-canvas-area {
+  flex: 1;
+  position: relative;
+  border-radius: var(--border-radius-sm);
+  background: rgba(0,0,0, 0.2);
+  overflow: hidden;
+}
+
+.mock-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.3;
+}
+
+/* ICT Overlays */
+.ict-fvg, .ict-ob {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-left: 2px solid;
+  border-right: 2px solid;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.ict-fvg { border-color: var(--trade-buy); }
+.ict-ob { border-color: var(--trade-sell); }
+
+.mock-price-line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
