@@ -1,36 +1,88 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Chart.css';
 
-export const Chart: React.FC = () => {
+interface ChartProps {
+  symbol: string;
+}
+
+export const Chart: React.FC<ChartProps> = ({ symbol }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Simulated chart rendering
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const drawGrid = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < canvas.width; i += 40) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, canvas.height);
+        ctx.stroke();
+      }
+      for (let i = 0; i < canvas.height; i += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(canvas.width, i);
+        ctx.stroke();
+      }
+    };
+
+    const drawCandles = () => {
+      let x = 20;
+      for (let i = 0; i < 20; i++) {
+        const up = Math.random() > 0.5;
+        const open = Math.random() * 100 + 100;
+        const close = open + (Math.random() * 40 - 20);
+        const high = Math.max(open, close) + Math.random() * 20;
+        const low = Math.min(open, close) - Math.random() * 20;
+
+        ctx.strokeStyle = up ? '#10b981' : '#ef4444';
+        ctx.fillStyle = up ? '#10b981' : '#ef4444';
+
+        // Wick
+        ctx.beginPath();
+        ctx.moveTo(x + 5, canvas.height - high);
+        ctx.lineTo(x + 5, canvas.height - low);
+        ctx.stroke();
+
+        // Body
+        const bodyHeight = Math.abs(open - close) || 1;
+        const bodyY = canvas.height - Math.max(open, close);
+        ctx.fillRect(x, bodyY, 10, bodyHeight);
+
+        x += 30;
+      }
+    };
+
+    const animate = () => {
+      drawGrid();
+      drawCandles();
+    };
+
+    animate();
+    const interval = setInterval(animate, 2000);
+    return () => clearInterval(interval);
+  }, [symbol]);
+
   return (
-    <div className="chart-wrapper">
-      <div className="chart-header flex-between">
-        <div className="chart-symbol-info">
-          <h2>EURUSD</h2>
-          <span className="chart-timeframe">15m</span>
-        </div>
-        <div className="chart-price-info">
-          <span className="current-price">1.09245</span>
-          <span className="price-change text-buy">+0.0012 (+0.11%)</span>
+    <div className="chart-container glass-panel">
+      <div className="chart-header">
+        <h3>{symbol}</h3>
+        <div className="chart-controls">
+          <button>1m</button>
+          <button className="active">5m</button>
+          <button>15m</button>
+          <button>1H</button>
         </div>
       </div>
-      
-      <div className="chart-canvas-area">
-        {/* Mocking a chart grid and ICT overlay */}
-        <div className="mock-grid"></div>
-        
-        {/* Example ICT Overlays */}
-        <div className="ict-fvg bg-buy" style={{ top: '30%', height: '40px' }}>
-          <span>+FVG (Bullish)</span>
-        </div>
-        <div className="ict-ob bg-sell" style={{ top: '10%', height: '25px' }}>
-          <span>-OB (Bearish)</span>
-        </div>
-
-        {/* Mock Price Line */}
-        <svg className="mock-price-line" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path d="M0,80 Q20,90 40,60 T70,40 T100,50" fill="none" stroke="var(--accent-blue)" strokeWidth="2" />
-        </svg>
+      <div className="canvas-wrapper">
+        <canvas ref={canvasRef} width={800} height={400} />
       </div>
     </div>
   );

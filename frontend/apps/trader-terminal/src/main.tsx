@@ -1,10 +1,10 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { Workspace } from './components/workspace/Workspace'
+import { createRoot } from 'react-dom/client'
 import './index.css'
+import App from './App'
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Workspace />
+    <App />
   </React.StrictMode>,
 )

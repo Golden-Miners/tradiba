@@ -1,33 +1,43 @@
 :root {
-  /* Color Palette - Premium Dark Theme */
-  --bg-base: #0B0E14; /* Deep, almost black space */
-  --bg-surface: #151A22; /* Slightly lighter surface for panels */
-  --bg-surface-glass: rgba(21, 26, 34, 0.7); /* Glassmorphism surface */
+  /* Dark Mode Base Variables */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
   
-  --border-subtle: #242A35;
-  --border-focus: #3A4556;
-
-  --text-primary: #FFFFFF;
-  --text-secondary: #909AAA;
-  --text-muted: #5B6577;
-
-  /* Accents */
-  --accent-blue: #3E8BFF;
-  --accent-blue-glow: rgba(62, 139, 255, 0.2);
-  --accent-purple: #9D4EDD;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
   
-  /* Trading Specific */
-  --trade-buy: #00D287;
-  --trade-buy-bg: rgba(0, 210, 135, 0.15);
-  --trade-sell: #F6465D;
-  --trade-sell-bg: rgba(246, 70, 93, 0.15);
-
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
+  --accent-primary: #3b82f6;
+  --accent-hover: #2563eb;
   
-  --transition-fast: 0.15s ease-out;
-  --transition-normal: 0.3s ease;
+  --status-up: #10b981;
+  --status-down: #ef4444;
+  --status-warning: #f59e0b;
+  --status-info: #3b82f6;
+
+  --border-color: #334155;
+  
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e2e8f0;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  
+  --border-color: #e2e8f0;
+  
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -37,83 +47,36 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--bg-base);
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
   color: var(--text-primary);
-  overflow: hidden; /* Terminal app behavior */
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden; /* Terminal app should not scroll globally */
 }
 
-/* Glassmorphism Panel Utility */
+/* Glassmorphism Utility */
 .glass-panel {
-  background: var(--bg-surface-glass);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--border-radius-md);
-  box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 8px;
 }
 
-/* Custom Scrollbar */
+/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-base); 
+  background: var(--bg-primary); 
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-subtle); 
+  background: var(--bg-tertiary); 
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border-focus); 
-}
-
-/* Base Typo */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-p {
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-}
-
-/* Inputs & Buttons */
-button {
-  cursor: pointer;
-  border: none;
-  font-family: inherit;
-  transition: all var(--transition-fast);
-}
-
-button.btn-primary {
-  background: var(--accent-blue);
-  color: white;
-  padding: 8px 16px;
-  border-radius: var(--border-radius-sm);
-  font-weight: 500;
-  font-size: 0.875rem;
-}
-button.btn-primary:hover {
-  filter: brightness(1.2);
-  box-shadow: 0 0 12px var(--accent-blue-glow);
-}
-
-.text-buy { color: var(--trade-buy); }
-.text-sell { color: var(--trade-sell); }
-.bg-buy { background: var(--trade-buy-bg); color: var(--trade-buy); }
-.bg-sell { background: var(--trade-sell-bg); color: var(--trade-sell); }
-
-/* Utility */
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  background: var(--text-tertiary); 
 }
