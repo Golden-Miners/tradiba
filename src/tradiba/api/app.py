@@ -49,7 +49,7 @@ def create_app() -> FastAPI:
     @app.middleware("http")
     async def set_secure_headers(request: Request, call_next):
         response = await call_next(request)
-        secure_headers.framework.fastapi(response)
+        secure_headers.set_headers(response)
         return response
         
     # Exception Handlers
