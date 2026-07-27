@@ -435,6 +435,48 @@ class AIUsageRecordedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("AIUsageRecorded", timestamp, payload)
 
+# V6.1 AI Factory Events
+@dataclass
+class DatasetCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DatasetCreated", timestamp, payload)
+
+@dataclass
+class TrainingStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("TrainingStarted", timestamp, payload)
+
+@dataclass
+class TrainingCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("TrainingCompleted", timestamp, payload)
+
+@dataclass
+class BenchmarkExecutedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("BenchmarkExecuted", timestamp, payload)
+
+@dataclass
+class PromptValidatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PromptValidated", timestamp, payload)
+
+@dataclass
+class QualityGatePassedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("QualityGatePassed", timestamp, payload)
+
+@dataclass
+class QualityGateFailedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("QualityGateFailed", timestamp, payload)
+
+@dataclass
+class AIReleasePublishedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AIReleasePublished", timestamp, payload)
+
+
 
 
 
