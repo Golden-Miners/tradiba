@@ -397,6 +397,45 @@ class InnovationApprovedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("InnovationApproved", timestamp, payload)
 
+# V6.0 AI Platform & Enterprise Intelligence Events
+@dataclass
+class AIRequestReceivedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AIRequestReceived", timestamp, payload)
+
+@dataclass
+class ModelSelectedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ModelSelected", timestamp, payload)
+
+@dataclass
+class PromptVersionUsedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PromptVersionUsed", timestamp, payload)
+
+@dataclass
+class ToolInvocationCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ToolInvocationCompleted", timestamp, payload)
+
+@dataclass
+class WorkflowExecutedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("WorkflowExecuted", timestamp, payload)
+
+@dataclass
+class PolicyValidationCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PolicyValidationCompleted", timestamp, payload)
+
+
+
+@dataclass
+class AIUsageRecordedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AIUsageRecorded", timestamp, payload)
+
+
 
 
 
