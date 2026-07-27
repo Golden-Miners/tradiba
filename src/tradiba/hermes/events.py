@@ -243,5 +243,42 @@ class PredictionConfidenceUpdatedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("PredictionConfidenceUpdated", timestamp, payload)
 
+# V5.3 Continuous Learning & Knowledge Evolution Events
+@dataclass
+class ExperienceReplayedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ExperienceReplayed", timestamp, payload)
+
+@dataclass
+class KnowledgeConsolidatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("KnowledgeConsolidated", timestamp, payload)
+
+@dataclass
+class ConfidenceCalibratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ConfidenceCalibrated", timestamp, payload)
+
+@dataclass
+class LearningCycleCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("LearningCycleCompleted", timestamp, payload)
+
+@dataclass
+class PromptVersionEvaluatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PromptVersionEvaluated", timestamp, payload)
+
+@dataclass
+class HumanFeedbackIntegratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HumanFeedbackIntegrated", timestamp, payload)
+
+@dataclass
+class KnowledgePromotedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("KnowledgePromoted", timestamp, payload)
+
+
 
 
