@@ -1,5 +1,3 @@
-import pytest
-import asyncio
 from tradiba.hermes.collective.registry.capabilities import CapabilityRegistry
 
 def test_registry_register_and_find():

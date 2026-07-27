@@ -1,5 +1,4 @@
 import pytest
-import asyncio
 from tradiba.hermes.collective.blackboard.memory import BlackboardMemory
 
 @pytest.mark.asyncio

@@ -207,4 +207,41 @@ class CollectiveLearningUpdatedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("CollectiveLearningUpdated", timestamp, payload)
 
+# V5.2 World Model & Adaptive Planning Events
+@dataclass
+class WorldModelUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("WorldModelUpdated", timestamp, payload)
+
+@dataclass
+class ScenarioSimulationStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ScenarioSimulationStarted", timestamp, payload)
+
+@dataclass
+class ScenarioSimulationCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ScenarioSimulationCompleted", timestamp, payload)
+
+@dataclass
+class AdaptivePlanCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AdaptivePlanCreated", timestamp, payload)
+
+@dataclass
+class ForecastGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ForecastGenerated", timestamp, payload)
+
+@dataclass
+class PlanOptimizedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PlanOptimized", timestamp, payload)
+
+@dataclass
+class PredictionConfidenceUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PredictionConfidenceUpdated", timestamp, payload)
+
+
 

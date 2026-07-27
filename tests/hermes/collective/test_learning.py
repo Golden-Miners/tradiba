@@ -1,5 +1,4 @@
 import pytest
-import asyncio
 from tradiba.hermes.collective.runtime.environment import AgentRuntime
 from tradiba.hermes.collective.agents.specialized import LearningAgent
 

@@ -1,4 +1,3 @@
-import pytest
 from tradiba.hermes.collective.consensus.engine import ConsensusEngine
 
 def test_consensus_majority():

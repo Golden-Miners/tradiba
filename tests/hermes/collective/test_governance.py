@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import Mock
 from tradiba.hermes.collective.governance.collective_governance import CollectiveGovernance
 from tradiba.hermes.collective.consensus.engine import ConsensusEngine

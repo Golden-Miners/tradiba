@@ -1,5 +1,5 @@
 import asyncio
-from typing import Dict, Any, Callable, List, Optional
+from typing import Dict, Any, Callable, List
 import uuid
 
 class CommunicationBus:
