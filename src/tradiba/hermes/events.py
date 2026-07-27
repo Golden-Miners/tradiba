@@ -476,6 +476,48 @@ class AIReleasePublishedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("AIReleasePublished", timestamp, payload)
 
+# V6.2 AI Scientist Events
+@dataclass
+class ResearchQuestionCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ResearchQuestionCreated", timestamp, payload)
+
+@dataclass
+class HypothesisGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HypothesisGenerated", timestamp, payload)
+
+@dataclass
+class ExperimentDesignedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ExperimentDesigned", timestamp, payload)
+
+@dataclass
+class ExperimentValidatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ExperimentValidated", timestamp, payload)
+
+@dataclass
+class PublicationCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PublicationCreated", timestamp, payload)
+
+@dataclass
+class PeerReviewCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PeerReviewCompleted", timestamp, payload)
+
+@dataclass
+class ResearchPromotedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ResearchPromoted", timestamp, payload)
+
+@dataclass
+class ResearchArchivedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ResearchArchived", timestamp, payload)
+
+
 
 
 
