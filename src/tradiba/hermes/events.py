@@ -356,6 +356,48 @@ class SelfDiagnosisCompletedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("SelfDiagnosisCompleted", timestamp, payload)
 
+# V5.6 Cognitive Innovation & Capability Evolution Events
+@dataclass
+class CapabilityProposedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CapabilityProposed", timestamp, payload)
+
+@dataclass
+class SkillGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillGenerated", timestamp, payload)
+
+@dataclass
+class AgentGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AgentGenerated", timestamp, payload)
+
+@dataclass
+class WorkflowSynthesizedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("WorkflowSynthesized", timestamp, payload)
+
+@dataclass
+class PluginGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PluginGenerated", timestamp, payload)
+
+@dataclass
+class InnovationValidatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("InnovationValidated", timestamp, payload)
+
+@dataclass
+class InnovationRejectedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("InnovationRejected", timestamp, payload)
+
+@dataclass
+class InnovationApprovedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("InnovationApproved", timestamp, payload)
+
+
 
 
 
