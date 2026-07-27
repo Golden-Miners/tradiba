@@ -517,6 +517,48 @@ class ResearchArchivedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("ResearchArchived", timestamp, payload)
 
+# V6.3 Engineering Events
+@dataclass
+class ArchitectureAnalyzedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ArchitectureAnalyzed", timestamp, payload)
+
+@dataclass
+class RefactoringProposedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RefactoringProposed", timestamp, payload)
+
+@dataclass
+class CodeGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CodeGenerated", timestamp, payload)
+
+@dataclass
+class TestsGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("TestsGenerated", timestamp, payload)
+
+@dataclass
+class DocumentationUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DocumentationUpdated", timestamp, payload)
+
+@dataclass
+class DraftPullRequestCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DraftPullRequestCreated", timestamp, payload)
+
+@dataclass
+class SecurityReviewCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SecurityReviewCompleted", timestamp, payload)
+
+@dataclass
+class EngineeringKnowledgeUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("EngineeringKnowledgeUpdated", timestamp, payload)
+
+
 
 
 
