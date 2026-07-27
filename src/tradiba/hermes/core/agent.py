@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Optional
 from tradiba.hermes.models.ollama import OllamaClient
 from tradiba.hermes.core.goals import HermesGoal, GoalManager, GoalStatus
 from tradiba.hermes.core.planner import Planner

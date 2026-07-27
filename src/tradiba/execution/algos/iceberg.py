@@ -53,7 +53,7 @@ class IcebergAlgorithm:
             return
             
         # Determine child size, optionally adding variance
-        child_qty = min(self.display_size, order["remaining_quantity"])
+        min(self.display_size, order["remaining_quantity"])
         
         # Mock broker submission
         child_id = f"CHILD-{parent_id}-{order['remaining_quantity']}"

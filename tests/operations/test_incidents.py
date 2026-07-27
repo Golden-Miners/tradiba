@@ -1,4 +1,3 @@
-import pytest
 from tradiba.operations.incidents import IncidentManager, IncidentSeverity, IncidentStatus
 
 def test_report_incident():

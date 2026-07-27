@@ -1,5 +1,4 @@
 from tradiba.hermes.research.knowledge.graph import KnowledgeGraph
-import os
 
 def test_knowledge_graph_nodes_and_edges(tmp_path):
     storage = tmp_path / "graph.json"

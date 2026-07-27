@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
-from typing import Dict, Any, List
+from fastapi import APIRouter, HTTPException, BackgroundTasks
+from typing import Dict, Any
 
 from tradiba.operations.backups import BackupManager
 from tradiba.operations.compliance import ComplianceEngine

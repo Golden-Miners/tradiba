@@ -11,7 +11,6 @@ class MarketIntelligenceAgent(Agent):
 
     async def execute(self, context: AgentContext) -> AgentResult:
         # Mock LLM/analysis logic
-        market_data = context.market_snapshot
         
         reasoning = "Market exhibits low volatility and clear upward structure."
         

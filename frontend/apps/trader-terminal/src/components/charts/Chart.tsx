@@ -1,74 +1,117 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { wsService } from '@/services/websocket';
 import './Chart.css';
 
 interface ChartProps {
   symbol: string;
 }
 
+interface Candle {
+  time: number;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+}
+
 export const Chart: React.FC<ChartProps> = ({ symbol }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [candles, setCandles] = useState<Candle[]>([]);
 
-  // Simulated chart rendering
+  useEffect(() => {
+    // Fetch initial historical candles
+    fetch(`http://localhost:8000/api/market/candles?symbol=${symbol}&timeframe=M5&count=50`)
+      .then(res => res.json())
+      .then(data => {
+         if (Array.isArray(data)) {
+           setCandles(data);
+         }
+      })
+      .catch(err => console.error('Failed to fetch candles:', err));
+
+    // Subscribe to live ticks
+    const handleTick = (payload: any) => {
+      if (payload.symbol === symbol) {
+        setCandles(prev => {
+          if (prev.length === 0) return prev;
+          const newCandles = [...prev];
+          const lastCandle = { ...newCandles[newCandles.length - 1] };
+          lastCandle.close = payload.price;
+          lastCandle.high = Math.max(lastCandle.high, payload.price);
+          lastCandle.low = Math.min(lastCandle.low, payload.price);
+          newCandles[newCandles.length - 1] = lastCandle;
+          return newCandles;
+        });
+      }
+    };
+
+    wsService.subscribe('MarketTickEvent', handleTick);
+
+    return () => {
+      wsService.unsubscribe('MarketTickEvent', handleTick);
+    };
+  }, [symbol]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const drawGrid = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-      ctx.lineWidth = 1;
-      for (let i = 0; i < canvas.width; i += 40) {
-        ctx.beginPath();
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i, canvas.height);
-        ctx.stroke();
-      }
-      for (let i = 0; i < canvas.height; i += 40) {
-        ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(canvas.width, i);
-        ctx.stroke();
-      }
-    };
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const drawCandles = () => {
-      let x = 20;
-      for (let i = 0; i < 20; i++) {
-        const up = Math.random() > 0.5;
-        const open = Math.random() * 100 + 100;
-        const close = open + (Math.random() * 40 - 20);
-        const high = Math.max(open, close) + Math.random() * 20;
-        const low = Math.min(open, close) - Math.random() * 20;
+    // Draw Grid
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < canvas.width; i += 40) {
+      ctx.beginPath();
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, canvas.height);
+      ctx.stroke();
+    }
+    for (let i = 0; i < canvas.height; i += 40) {
+      ctx.beginPath();
+      ctx.moveTo(0, i);
+      ctx.lineTo(canvas.width, i);
+      ctx.stroke();
+    }
 
-        ctx.strokeStyle = up ? '#10b981' : '#ef4444';
-        ctx.fillStyle = up ? '#10b981' : '#ef4444';
+    if (candles.length === 0) return;
 
-        // Wick
-        ctx.beginPath();
-        ctx.moveTo(x + 5, canvas.height - high);
-        ctx.lineTo(x + 5, canvas.height - low);
-        ctx.stroke();
+    // Calculate scaling
+    const minPrice = Math.min(...candles.map(c => c.low));
+    const maxPrice = Math.max(...candles.map(c => c.high));
+    const range = maxPrice - minPrice || 1;
 
-        // Body
-        const bodyHeight = Math.abs(open - close) || 1;
-        const bodyY = canvas.height - Math.max(open, close);
-        ctx.fillRect(x, bodyY, 10, bodyHeight);
+    const padding = 20;
+    const usableHeight = canvas.height - padding * 2;
+    const getY = (price: number) => canvas.height - padding - ((price - minPrice) / range) * usableHeight;
 
-        x += 30;
-      }
-    };
+    const candleWidth = Math.max(2, (canvas.width - padding * 2) / candles.length - 4);
+    const spacing = Math.max(1, (canvas.width - padding * 2) / candles.length);
+    
+    // Draw Candles
+    let x = padding;
+    for (const candle of candles) {
+      const isUp = candle.close >= candle.open;
+      ctx.strokeStyle = isUp ? '#10b981' : '#ef4444';
+      ctx.fillStyle = isUp ? '#10b981' : '#ef4444';
 
-    const animate = () => {
-      drawGrid();
-      drawCandles();
-    };
+      // Wick
+      ctx.beginPath();
+      ctx.moveTo(x + candleWidth / 2, getY(candle.high));
+      ctx.lineTo(x + candleWidth / 2, getY(candle.low));
+      ctx.stroke();
 
-    animate();
-    const interval = setInterval(animate, 2000);
-    return () => clearInterval(interval);
-  }, [symbol]);
+      // Body
+      const bodyY = getY(Math.max(candle.open, candle.close));
+      const bodyHeight = Math.max(1, Math.abs(getY(candle.open) - getY(candle.close)));
+      ctx.fillRect(x, bodyY, candleWidth, bodyHeight);
+
+      x += spacing;
+    }
+  }, [candles]);
 
   return (
     <div className="chart-container glass-panel">

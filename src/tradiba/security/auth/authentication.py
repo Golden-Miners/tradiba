@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 from passlib.context import CryptContext
 from tradiba.security.users.models import User, UserStatus
 from tradiba.security.auth.jwt import JWTService

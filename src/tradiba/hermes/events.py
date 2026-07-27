@@ -93,3 +93,34 @@ class HermesPromotionRequestedEvent(HermesEvent):
 class HermesRollbackCompletedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("HermesRollbackCompleted", timestamp, payload)
+
+# V4.4 Portfolio Manager Events
+@dataclass
+class HermesPortfolioCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesPortfolioCreated", timestamp, payload)
+
+@dataclass
+class HermesAllocationProposedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesAllocationProposed", timestamp, payload)
+
+@dataclass
+class HermesRebalanceRequestedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesRebalanceRequested", timestamp, payload)
+
+@dataclass
+class HermesRiskBudgetUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesRiskBudgetUpdated", timestamp, payload)
+
+@dataclass
+class HermesPortfolioLearningCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesPortfolioLearningCompleted", timestamp, payload)
+
+@dataclass
+class HermesPromotionAssessmentEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("HermesPromotionAssessment", timestamp, payload)

@@ -1,6 +1,6 @@
 import json
 import os
-from typing import List, Dict, Any
+from typing import Dict, Any
 
 class LongTermMemory:
     """Stores accumulated experience such as user preferences and research results."""

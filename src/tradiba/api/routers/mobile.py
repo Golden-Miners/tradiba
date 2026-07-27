@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
-from typing import List, Dict, Any
+from fastapi import APIRouter, Depends
 
 # Mock dependency for user retrieval (this would be injected in reality)
 def get_current_user():

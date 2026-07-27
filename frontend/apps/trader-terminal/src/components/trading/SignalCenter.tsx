@@ -2,12 +2,38 @@ import React from 'react';
 import { Target, TrendingUp, TrendingDown, Clock } from 'lucide-react';
 import './SignalCenter.css';
 
+interface Signal {
+  id: number;
+  symbol: string;
+  action: string;
+  confidence: number;
+  status: string;
+  time: string;
+  entry: string;
+  sl: string;
+  tp: string;
+}
+
 export const SignalCenter: React.FC = () => {
-  const signals = [
-    { id: 1, symbol: 'XAUUSD', action: 'BUY', confidence: 92, status: 'Active', time: '2m ago', entry: '2350.50', sl: '2345.00', tp: '2360.00' },
-    { id: 2, symbol: 'BTCUSD', action: 'SELL', confidence: 85, status: 'Waiting', time: '5m ago', entry: '64200', sl: '65000', tp: '62000' },
-    { id: 3, symbol: 'AAPL', action: 'BUY', confidence: 78, status: 'Active', time: '12m ago', entry: '175.20', sl: '172.00', tp: '180.00' },
-  ];
+  const [signals, setSignals] = React.useState<Signal[]>([]);
+
+  React.useEffect(() => {
+    const fetchSignals = async () => {
+      try {
+        const res = await fetch('http://localhost:8000/api/market/signals');
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setSignals(data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch live signals', err);
+      }
+    };
+    
+    fetchSignals();
+    const interval = setInterval(fetchSignals, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="signal-center glass-panel">

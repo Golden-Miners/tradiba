@@ -1,4 +1,3 @@
-import pytest
 import os
 from tradiba.operations.backups import BackupManager
 

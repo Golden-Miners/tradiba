@@ -12,7 +12,7 @@ def test_websocket():
     # Mock global ws_manager without running loop
     tradiba.api.websocket.ws_manager = WebSocketManager(EventBus())
     
-    with client.websocket_connect("/ws") as websocket:
+    with client.websocket_connect("/ws"):
         assert len(tradiba.api.websocket.ws_manager.active_connections) == 1
         
     assert len(tradiba.api.websocket.ws_manager.active_connections) == 0

@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import List
 from .goals import HermesGoal
 from tradiba.hermes.models.ollama import OllamaClient
 

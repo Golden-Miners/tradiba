@@ -35,7 +35,6 @@ def bootstrap() -> Application:
     # Infrastructure
     event_bus = EventBus()
     scheduler = Scheduler()
-    database = None # Database is no longer an object instance but rather a global Engine/SessionFactory
     mt5_execution = MT5ExecutionAdapter()
     mt5_market = MT5MarketDataAdapter()
     mt5_connection = MT5ConnectionManager(event_bus=event_bus, scheduler=scheduler)
@@ -58,7 +57,7 @@ def bootstrap() -> Application:
     portfolio_repo = SqlAlchemyPortfolioRepository(session)
     portfolio_sync = MT5PortfolioSynchronizer(mt5_execution)
     
-    portfolio_service = PortfolioService(
+    PortfolioService(
         sync=portfolio_sync,
         repository=portfolio_repo,
         bus=event_bus,

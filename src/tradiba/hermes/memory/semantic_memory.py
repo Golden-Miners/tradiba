@@ -1,4 +1,3 @@
-from typing import List, Dict
 
 class SemanticMemory:
     """Stores permanent trading knowledge and platform rules."""

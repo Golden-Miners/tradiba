@@ -25,12 +25,23 @@ from tradiba.api.exceptions import APIError, api_error_handler, global_exception
 from tradiba.api import websocket as ws_module
 
 
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    from tradiba.events import EventBus
+    from tradiba.api.websocket import setup_websockets
+    event_bus = EventBus()
+    setup_websockets(event_bus)
+    yield
+
 def create_app() -> FastAPI:
     app = FastAPI(
         title="Tradiba API",
         version="1.0.0",
         docs_url="/docs",
         redoc_url="/redoc",
+        lifespan=lifespan,
     )
     
     app.add_middleware(
@@ -79,7 +90,7 @@ def create_app() -> FastAPI:
         try:
             while True:
                 # Wait for subscription message
-                data = await websocket.receive_json()
+                await websocket.receive_json()
                 # Process subscription if necessary
         except WebSocketDisconnect:
             ws_module.ws_manager.disconnect(websocket)

@@ -1,7 +1,7 @@
 import asyncio
 import uuid
 from dataclasses import dataclass
-from typing import Dict, Any
+from typing import Dict
 from tradiba.hermes.research.hypotheses.generator import Hypothesis
 
 @dataclass

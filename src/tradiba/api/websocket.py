@@ -1,14 +1,14 @@
 import json
 import asyncio
 from typing import List
+from dataclasses import dataclass
 from fastapi import WebSocket
 from tradiba.events import EventBus, DomainEvent
 from tradiba.integrations.brokers.mt5.service import MT5Service
 
-@dataclass
+@dataclass(frozen=True, kw_only=True)
 class MarketTickEvent(DomainEvent):
-    def __init__(self, timestamp: float, payload: dict):
-        super().__init__("MarketTickEvent", timestamp, payload)
+    payload: dict
 
 
 class WebSocketManager:
@@ -87,7 +87,7 @@ class WebSocketManager:
                     })
                     await self.broadcast(msg)
             except Exception as e:
-                pass
+                print(f"Error polling tick: {e}")
             await asyncio.sleep(1)
 
 
