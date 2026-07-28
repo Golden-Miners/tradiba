@@ -814,6 +814,58 @@ class ConnectorHealthChangedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("ConnectorHealthChanged", timestamp, payload)
 
+# V8.2 Operations Events
+@dataclass
+class IncidentDetectedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("IncidentDetected", timestamp, payload)
+
+@dataclass
+class IncidentCorrelatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("IncidentCorrelated", timestamp, payload)
+
+@dataclass
+class RootCauseIdentifiedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RootCauseIdentified", timestamp, payload)
+
+@dataclass
+class RunbookStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RunbookStarted", timestamp, payload)
+
+@dataclass
+class RunbookCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RunbookCompleted", timestamp, payload)
+
+@dataclass
+class RunbookRolledBackEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RunbookRolledBack", timestamp, payload)
+
+@dataclass
+class PredictionGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PredictionGenerated", timestamp, payload)
+
+@dataclass
+class ChaosExperimentCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ChaosExperimentCompleted", timestamp, payload)
+
+@dataclass
+class ReliabilityScoreUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ReliabilityScoreUpdated", timestamp, payload)
+
+@dataclass
+class PostmortemPublishedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PostmortemPublished", timestamp, payload)
+
+
 
 
 
