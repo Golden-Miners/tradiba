@@ -712,6 +712,58 @@ class FederationHealthChangedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("FederationHealthChanged", timestamp, payload)
 
+# V8.0 Ecosystem Events
+@dataclass
+class ApplicationPublishedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ApplicationPublished", timestamp, payload)
+
+@dataclass
+class ApplicationInstalledEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ApplicationInstalled", timestamp, payload)
+
+@dataclass
+class ApplicationUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ApplicationUpdated", timestamp, payload)
+
+@dataclass
+class AssetRegisteredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AssetRegistered", timestamp, payload)
+
+@dataclass
+class LicenseIssuedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("LicenseIssued", timestamp, payload)
+
+@dataclass
+class LicenseExpiredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("LicenseExpired", timestamp, payload)
+
+@dataclass
+class MarketplaceUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MarketplaceUpdated", timestamp, payload)
+
+@dataclass
+class CertificationGrantedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CertificationGranted", timestamp, payload)
+
+@dataclass
+class CertificationRevokedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CertificationRevoked", timestamp, payload)
+
+@dataclass
+class BillingRecordedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("BillingRecorded", timestamp, payload)
+
+
 
 
 
