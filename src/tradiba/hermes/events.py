@@ -763,6 +763,58 @@ class BillingRecordedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("BillingRecorded", timestamp, payload)
 
+# V8.1 Automation Events
+@dataclass
+class WorkflowStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("WorkflowStarted", timestamp, payload)
+
+@dataclass
+class WorkflowCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("WorkflowCompleted", timestamp, payload)
+
+@dataclass
+class WorkflowFailedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("WorkflowFailed", timestamp, payload)
+
+@dataclass
+class ApprovalRequestedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ApprovalRequested", timestamp, payload)
+
+@dataclass
+class ApprovalGrantedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ApprovalGranted", timestamp, payload)
+
+@dataclass
+class ApprovalRejectedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ApprovalRejected", timestamp, payload)
+
+@dataclass
+class SLABreachedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SLABreached", timestamp, payload)
+
+@dataclass
+class SLABreachedEscalationEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SLABreachedEscalation", timestamp, payload)
+
+@dataclass
+class ConnectorInstalledEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ConnectorInstalled", timestamp, payload)
+
+@dataclass
+class ConnectorHealthChangedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ConnectorHealthChanged", timestamp, payload)
+
+
 
 
 
