@@ -630,6 +630,53 @@ class DigitalTwinValidatedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("DigitalTwinValidated", timestamp, payload)
 
+# V7.1 Skill Pack Events
+@dataclass
+class SkillPackCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillPackCreated", timestamp, payload)
+
+@dataclass
+class SkillInstalledEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillInstalled", timestamp, payload)
+
+@dataclass
+class SkillActivatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillActivated", timestamp, payload)
+
+@dataclass
+class SkillUpgradedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillUpgraded", timestamp, payload)
+
+@dataclass
+class SkillExecutionStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillExecutionStarted", timestamp, payload)
+
+@dataclass
+class SkillExecutionCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillExecutionCompleted", timestamp, payload)
+
+@dataclass
+class SkillCertificationPassedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillCertificationPassed", timestamp, payload)
+
+@dataclass
+class SkillCertificationFailedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillCertificationFailed", timestamp, payload)
+
+@dataclass
+class SkillRemovedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SkillRemoved", timestamp, payload)
+
+
 
 
 
