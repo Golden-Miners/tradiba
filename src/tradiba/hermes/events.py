@@ -628,53 +628,49 @@ class GovernancePolicyAppliedEvent(HermesEvent):
 @dataclass
 class DigitalTwinValidatedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
-        super().__init__("DigitalTwinValidated", timestamp, payload)
-
-# V7.1 Skill Pack Events
-@dataclass
-class SkillPackCreatedEvent(HermesEvent):
-    def __init__(self, timestamp: float, payload: Dict[str, Any]):
-        super().__init__("SkillPackCreated", timestamp, payload)
-
-@dataclass
-class SkillInstalledEvent(HermesEvent):
-    def __init__(self, timestamp: float, payload: Dict[str, Any]):
-        super().__init__("SkillInstalled", timestamp, payload)
-
-@dataclass
-class SkillActivatedEvent(HermesEvent):
-    def __init__(self, timestamp: float, payload: Dict[str, Any]):
-        super().__init__("SkillActivated", timestamp, payload)
-
-@dataclass
-class SkillUpgradedEvent(HermesEvent):
-    def __init__(self, timestamp: float, payload: Dict[str, Any]):
-        super().__init__("SkillUpgraded", timestamp, payload)
-
-@dataclass
-class SkillExecutionStartedEvent(HermesEvent):
-    def __init__(self, timestamp: float, payload: Dict[str, Any]):
-        super().__init__("SkillExecutionStarted", timestamp, payload)
-
-@dataclass
-class SkillExecutionCompletedEvent(HermesEvent):
-    def __init__(self, timestamp: float, payload: Dict[str, Any]):
-        super().__init__("SkillExecutionCompleted", timestamp, payload)
-
-@dataclass
-class SkillCertificationPassedEvent(HermesEvent):
-    def __init__(self, timestamp: float, payload: Dict[str, Any]):
-        super().__init__("SkillCertificationPassed", timestamp, payload)
-
-@dataclass
-class SkillCertificationFailedEvent(HermesEvent):
-    def __init__(self, timestamp: float, payload: Dict[str, Any]):
-        super().__init__("SkillCertificationFailed", timestamp, payload)
-
-@dataclass
-class SkillRemovedEvent(HermesEvent):
-    def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("SkillRemoved", timestamp, payload)
+
+# V7.2 Multimodal Events
+@dataclass
+class DocumentIndexedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DocumentIndexed", timestamp, payload)
+
+@dataclass
+class ImageAnalyzedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ImageAnalyzed", timestamp, payload)
+
+@dataclass
+class ChartRecognizedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ChartRecognized", timestamp, payload)
+
+@dataclass
+class AudioTranscribedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AudioTranscribed", timestamp, payload)
+
+@dataclass
+class VideoIndexedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("VideoIndexed", timestamp, payload)
+
+@dataclass
+class EmbeddingCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("EmbeddingCreated", timestamp, payload)
+
+@dataclass
+class CrossModalReasoningCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CrossModalReasoningCompleted", timestamp, payload)
+
+@dataclass
+class EvidenceGraphUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("EvidenceGraphUpdated", timestamp, payload)
+
 
 
 
