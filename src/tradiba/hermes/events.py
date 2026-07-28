@@ -671,6 +671,48 @@ class EvidenceGraphUpdatedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("EvidenceGraphUpdated", timestamp, payload)
 
+# V7.3 Federation Events
+@dataclass
+class FederationNodeJoinedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("FederationNodeJoined", timestamp, payload)
+
+@dataclass
+class FederationNodeLeftEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("FederationNodeLeft", timestamp, payload)
+
+@dataclass
+class CapabilityDiscoveredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CapabilityDiscovered", timestamp, payload)
+
+@dataclass
+class RemoteWorkflowStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RemoteWorkflowStarted", timestamp, payload)
+
+@dataclass
+class KnowledgeSharedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("KnowledgeShared", timestamp, payload)
+
+@dataclass
+class ModelExchangeCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ModelExchangeCompleted", timestamp, payload)
+
+@dataclass
+class TrustPolicyUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("TrustPolicyUpdated", timestamp, payload)
+
+@dataclass
+class FederationHealthChangedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("FederationHealthChanged", timestamp, payload)
+
+
 
 
 
