@@ -1040,6 +1040,53 @@ class InstitutionalReportPublishedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("InstitutionalReportPublished", timestamp, payload)
 
+# V9.2 Quant AI Events
+@dataclass
+class ProbabilisticForecastGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ProbabilisticForecastGenerated", timestamp, payload)
+
+@dataclass
+class MarketRegimeDetectedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MarketRegimeDetected", timestamp, payload)
+
+@dataclass
+class CausalAnalysisCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CausalAnalysisCompleted", timestamp, payload)
+
+@dataclass
+class RLExperimentFinishedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RLExperimentFinished", timestamp, payload)
+
+@dataclass
+class ModelValidationPassedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ModelValidationPassed", timestamp, payload)
+
+@dataclass
+class ModelValidationFailedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ModelValidationFailed", timestamp, payload)
+
+@dataclass
+class FeatureDriftDetectedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("FeatureDriftDetected", timestamp, payload)
+
+@dataclass
+class ModelRiskUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ModelRiskUpdated", timestamp, payload)
+
+@dataclass
+class ExplainabilityReportGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ExplainabilityReportGenerated", timestamp, payload)
+
+
 
 
 
