@@ -911,6 +911,44 @@ class SemanticIndexUpdatedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("SemanticIndexUpdated", timestamp, payload)
 
+# V8.4 Strategy Events
+@dataclass
+class StrategicPlanCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("StrategicPlanCreated", timestamp, payload)
+
+@dataclass
+class ScenarioSimulatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ScenarioSimulated", timestamp, payload)
+
+
+@dataclass
+class OptimizationCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("OptimizationCompleted", timestamp, payload)
+
+@dataclass
+class RiskPropagationCalculatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RiskPropagationCalculated", timestamp, payload)
+
+@dataclass
+class ResourcePlanUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ResourcePlanUpdated", timestamp, payload)
+
+@dataclass
+class ExecutiveDecisionRecordedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ExecutiveDecisionRecorded", timestamp, payload)
+
+@dataclass
+class StrategicLearningCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("StrategicLearningCompleted", timestamp, payload)
+
+
 
 
 
