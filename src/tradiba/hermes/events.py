@@ -994,6 +994,53 @@ class EnterpriseHealthCalculatedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("EnterpriseHealthCalculated", timestamp, payload)
 
+# V9.1 Quant Events
+@dataclass
+class AlphaGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AlphaGenerated", timestamp, payload)
+
+@dataclass
+class FactorCalculatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("FactorCalculated", timestamp, payload)
+
+@dataclass
+class PortfolioOptimizedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PortfolioOptimized", timestamp, payload)
+
+@dataclass
+class RiskModelUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RiskModelUpdated", timestamp, payload)
+
+@dataclass
+class ExecutionAnalyzedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ExecutionAnalyzed", timestamp, payload)
+
+@dataclass
+class TransactionCostCalculatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("TransactionCostCalculated", timestamp, payload)
+
+@dataclass
+class PerformanceAttributedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PerformanceAttributed", timestamp, payload)
+
+@dataclass
+class CapitalAllocationOptimizedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CapitalAllocationOptimized", timestamp, payload)
+
+@dataclass
+class InstitutionalReportPublishedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("InstitutionalReportPublished", timestamp, payload)
+
+
 
 
 
