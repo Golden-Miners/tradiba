@@ -865,6 +865,53 @@ class PostmortemPublishedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("PostmortemPublished", timestamp, payload)
 
+# V8.3 Knowledge Events
+@dataclass
+class KnowledgeCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("KnowledgeCreated", timestamp, payload)
+
+@dataclass
+class KnowledgeUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("KnowledgeUpdated", timestamp, payload)
+
+@dataclass
+class KnowledgeValidatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("KnowledgeValidated", timestamp, payload)
+
+@dataclass
+class KnowledgeArchivedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("KnowledgeArchived", timestamp, payload)
+
+@dataclass
+class OntologyUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("OntologyUpdated", timestamp, payload)
+
+@dataclass
+class EvidenceLinkedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("EvidenceLinked", timestamp, payload)
+
+@dataclass
+class ProvenanceRecordedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ProvenanceRecorded", timestamp, payload)
+
+@dataclass
+class BrainRecommendationGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("BrainRecommendationGenerated", timestamp, payload)
+
+@dataclass
+class SemanticIndexUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SemanticIndexUpdated", timestamp, payload)
+
+
 
 
 
