@@ -948,6 +948,53 @@ class StrategicLearningCompletedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("StrategicLearningCompleted", timestamp, payload)
 
+# V9.0 Autonomous Events
+@dataclass
+class MissionCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MissionCreated", timestamp, payload)
+
+@dataclass
+class MissionPlannedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MissionPlanned", timestamp, payload)
+
+@dataclass
+class MissionApprovedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MissionApproved", timestamp, payload)
+
+@dataclass
+class MissionStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MissionStarted", timestamp, payload)
+
+@dataclass
+class MissionCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MissionCompleted", timestamp, payload)
+
+@dataclass
+class MissionFailedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MissionFailed", timestamp, payload)
+
+@dataclass
+class EnterpriseStateUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("EnterpriseStateUpdated", timestamp, payload)
+
+@dataclass
+class AutonomyLevelChangedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AutonomyLevelChanged", timestamp, payload)
+
+@dataclass
+class EnterpriseHealthCalculatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("EnterpriseHealthCalculated", timestamp, payload)
+
+
 
 
 
