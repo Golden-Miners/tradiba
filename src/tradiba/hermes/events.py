@@ -1229,6 +1229,53 @@ class ModelRetiredEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("ModelRetired", timestamp, payload)
 
+# V9.6 Data Mesh Events
+@dataclass
+class DataProductPublishedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DataProductPublished", timestamp, payload)
+
+@dataclass
+class DataContractValidatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DataContractValidated", timestamp, payload)
+
+@dataclass
+class StreamingPipelineStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("StreamingPipelineStarted", timestamp, payload)
+
+@dataclass
+class StreamingPipelineFailedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("StreamingPipelineFailed", timestamp, payload)
+
+@dataclass
+class SemanticModelUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SemanticModelUpdated", timestamp, payload)
+
+@dataclass
+class FeatureComputedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("FeatureComputed", timestamp, payload)
+
+@dataclass
+class MarketplaceRegistrationEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MarketplaceRegistration", timestamp, payload)
+
+@dataclass
+class DataQualityViolationEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DataQualityViolation", timestamp, payload)
+
+@dataclass
+class ObservabilityIncidentCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ObservabilityIncidentCreated", timestamp, payload)
+
+
 
 
 
