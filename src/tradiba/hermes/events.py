@@ -1275,6 +1275,53 @@ class ObservabilityIncidentCreatedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("ObservabilityIncidentCreated", timestamp, payload)
 
+# V10.0 Enterprise Platform GA Events
+@dataclass
+class PlatformInstalledEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PlatformInstalled", timestamp, payload)
+
+@dataclass
+class PlatformUpgradedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("PlatformUpgraded", timestamp, payload)
+
+@dataclass
+class MigrationCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MigrationCompleted", timestamp, payload)
+
+@dataclass
+class CertificationPassedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CertificationPassed", timestamp, payload)
+
+@dataclass
+class CertificationFailedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CertificationFailed", timestamp, payload)
+
+@dataclass
+class SecurityScanCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SecurityScanCompleted", timestamp, payload)
+
+@dataclass
+class BenchmarkCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("BenchmarkCompleted", timestamp, payload)
+
+@dataclass
+class CompatibilityVerifiedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("CompatibilityVerified", timestamp, payload)
+
+@dataclass
+class LTSSnapshotCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("LTSSnapshotCreated", timestamp, payload)
+
+
 
 
 
