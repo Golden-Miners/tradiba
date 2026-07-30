@@ -1178,6 +1178,58 @@ class AlternativeDatasetPublishedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("AlternativeDatasetPublished", timestamp, payload)
 
+# V9.5 ModelOps Events
+@dataclass
+class ExperimentStartedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ExperimentStarted", timestamp, payload)
+
+@dataclass
+class ExperimentCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ExperimentCompleted", timestamp, payload)
+
+@dataclass
+class TrainingPipelineFinishedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("TrainingPipelineFinished", timestamp, payload)
+
+@dataclass
+class ModelRegisteredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ModelRegistered", timestamp, payload)
+
+@dataclass
+class ModelApprovedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ModelApproved", timestamp, payload)
+
+@dataclass
+class ModelDeployedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ModelDeployed", timestamp, payload)
+
+@dataclass
+class DeploymentRolledBackEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DeploymentRolledBack", timestamp, payload)
+
+@dataclass
+class ModelDriftDetectedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ModelDriftDetected", timestamp, payload)
+
+@dataclass
+class RetrainingTriggeredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RetrainingTriggered", timestamp, payload)
+
+@dataclass
+class ModelRetiredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ModelRetired", timestamp, payload)
+
+
 
 
 
