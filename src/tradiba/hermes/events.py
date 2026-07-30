@@ -1086,6 +1086,53 @@ class ExplainabilityReportGeneratedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("ExplainabilityReportGenerated", timestamp, payload)
 
+# V9.3 Compliance Events
+@dataclass
+class RegulationUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RegulationUpdated", timestamp, payload)
+
+@dataclass
+class ComplianceControlCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ComplianceControlCreated", timestamp, payload)
+
+@dataclass
+class TradeSurveillanceAlertEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("TradeSurveillanceAlert", timestamp, payload)
+
+@dataclass
+class InvestigationOpenedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("InvestigationOpened", timestamp, payload)
+
+@dataclass
+class InvestigationClosedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("InvestigationClosed", timestamp, payload)
+
+@dataclass
+class BestExecutionEvaluatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("BestExecutionEvaluated", timestamp, payload)
+
+@dataclass
+class AMLCheckCompletedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AMLCheckCompleted", timestamp, payload)
+
+@dataclass
+class RegulatoryReportGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RegulatoryReportGenerated", timestamp, payload)
+
+@dataclass
+class EvidenceArchivedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("EvidenceArchived", timestamp, payload)
+
+
 
 
 
