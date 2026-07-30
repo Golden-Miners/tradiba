@@ -1132,6 +1132,53 @@ class EvidenceArchivedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("EvidenceArchived", timestamp, payload)
 
+# V9.4 Alternative Data Events
+@dataclass
+class ConnectorRegisteredEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ConnectorRegistered", timestamp, payload)
+
+@dataclass
+class DatasetIngestedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DatasetIngested", timestamp, payload)
+
+@dataclass
+class DatasetValidatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DatasetValidated", timestamp, payload)
+
+@dataclass
+class LicenseVerifiedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("LicenseVerified", timestamp, payload)
+
+@dataclass
+class NewsProcessedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("NewsProcessed", timestamp, payload)
+
+@dataclass
+class MacroDatasetUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("MacroDatasetUpdated", timestamp, payload)
+
+@dataclass
+class FeatureGeneratedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("FeatureGenerated", timestamp, payload)
+
+@dataclass
+class KnowledgeGraphEnrichedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("KnowledgeGraphEnriched", timestamp, payload)
+
+@dataclass
+class AlternativeDatasetPublishedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("AlternativeDatasetPublished", timestamp, payload)
+
+
 
 
 
