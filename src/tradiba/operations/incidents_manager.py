@@ -64,3 +64,29 @@ class IncidentManager:
 
     def get_active_incidents(self) -> List[Incident]:
         return [inc for inc in self.incidents.values() if inc.status not in [IncidentStatus.RESOLVED, IncidentStatus.CLOSED]]
+
+    def create_postmortem(self, incident_id: str, root_cause: str, timeline: List[Dict[str, Any]], action_items: List[str]) -> Optional[Postmortem]:
+        if incident_id not in self.incidents:
+            return None
+        pm = Postmortem(
+            incident_id=incident_id,
+            root_cause=root_cause,
+            timeline=timeline,
+            action_items=action_items
+        )
+        self.postmortems[incident_id] = pm
+        return pm
+
+    def correlate_alerts(self, alerts: List[Dict[str, Any]]) -> Optional[Incident]:
+        """Simple heuristic to group similar alerts into a single incident."""
+        if not alerts:
+            return None
+        # E.g., if multiple alerts from 'API Gateway', group them
+        components = list(set(a.get("component", "unknown") for a in alerts))
+        descriptions = [a.get("message", "") for a in alerts]
+        return self.report_incident(
+            title=f"Correlated Incident: {len(alerts)} alerts detected",
+            description=" | ".join(descriptions),
+            severity=IncidentSeverity.SEV2,
+            components=components
+        )

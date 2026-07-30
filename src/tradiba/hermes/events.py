@@ -1321,8 +1321,41 @@ class LTSSnapshotCreatedEvent(HermesEvent):
     def __init__(self, timestamp: float, payload: Dict[str, Any]):
         super().__init__("LTSSnapshotCreated", timestamp, payload)
 
+# V10.1 Enterprise Operations & SRE Events
+@dataclass
+class IncidentCreatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("IncidentCreated", timestamp, payload)
 
+@dataclass
+class IncidentResolvedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("IncidentResolved", timestamp, payload)
 
+@dataclass
+class RunbookExecutedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("RunbookExecuted", timestamp, payload)
+
+@dataclass
+class SLOViolationDetectedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("SLOViolationDetected", timestamp, payload)
+
+@dataclass
+class DeploymentRecordedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DeploymentRecorded", timestamp, payload)
+
+@dataclass
+class DependencyGraphUpdatedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("DependencyGraphUpdated", timestamp, payload)
+
+@dataclass
+class ReliabilityReportPublishedEvent(HermesEvent):
+    def __init__(self, timestamp: float, payload: Dict[str, Any]):
+        super().__init__("ReliabilityReportPublished", timestamp, payload)
 
 
 
